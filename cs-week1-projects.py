@@ -193,28 +193,33 @@ Import the "math" module. Then, print an alphabetically sorted list of all the f
 #         print(func)
 
 s = 'abacaba'
-# def threeCharsDistinct(s):
-count = 0
 
-# for i in range(len(s)):
-#     if i < 6:
-#         if s[0] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
-#             count += 1
-# print(count)
+
 # def threeCharsDistinct(s):
 #     count = 0
+#
 #     for i in range(len(s)):
-#         if i < len(s) - 2:
-#             # print(i)
-#             if s[i] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
+#         if i < 6:
+#             if s[0] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
 #                 count += 1
-#     return count
-# print(threeCharsDistinct(s))
-# sentence = "Man bites dog"
-# def reverseSentence(sentence):
-#     words_array = sentence.split(' ')
-#     words_reversed = ' '.join(reversed(words_array))
-#     return words_reversed
+#     print(count)
+def threeCharsDistinct(s):
+    count = 0
+    for i in range(len(s)):
+        if i < len(s) - 2:
+            # print(i)
+            if s[i] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
+                count += 1
+    return count
+
+
+print(threeCharsDistinct(s))
+
+#     sentence = "Man bites dog"
+#     def reverseSentence(sentence):
+#         words_array = sentence.split(' ')
+#         words_reversed = ' '.join(reversed(words_array))
+#         return words_reversed
 # print(reverseSentence(sentence))
 #
 # passcode = '1111'
@@ -250,7 +255,7 @@ count = 0
 #     if passcode in attempts:
 #                 return False
 # print(incorrectPasscodeAttempts(passcode, attempts))
-#
+
 # n = 412
 #
 # def digitSumsDifference(n):
