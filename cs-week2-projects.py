@@ -1,3 +1,85 @@
+"""
+Given a sorted array `nums`, remove the duplicates from the array.
+
+Example 1:
+
+Given nums = [0, 1, 2, 3, 3, 3, 4]
+
+Your function should return [0, 1, 2, 3, 4]
+
+Example 2:
+
+Given nums = [0, 1, 1, 2, 2, 2, 3, 4, 4, 5]
+
+Your function should return [0, 1, 2, 3, 4, 5].
+
+*Note: For your first-pass, an out-of-place solution is okay. However, after
+solving out-of-place, try an in-place solution with a space complexity of O(1).
+For that solution, you will need to return the length of the modified `nums`.
+The length will tell the user where the end of the array is after removing all
+of the duplicates.*
+"""
+
+
+def remove_duplicates(nums):
+    # Your code here
+    i = 0
+    while i < len(nums) - 1:
+        if nums[i] == nums[i + 1]:
+            nums.pop(i + 1)
+        else:
+            i = i + 1
+    return nums
+
+
+"""
+Given a list of integers, your function should return `True` if any value
+appears at least two times in the array. Your function should return `False` if
+every element is unique.
+Example:
+Input: [1,3,3,2,1]
+Output: True
+Example:
+Input: [0,1,2,3]
+Output: False
+*Note: In your first solution, it is okay to use a simple linear search. What
+is the time complexity of this approach? Other possible solutions will have
+time complexities of `O(n log n)` or `O(n)`. Possible space complexities are
+`O(1)` or `O(n)`. Try to come up with solutions with different time and space
+complexities and think about the tradeoffs between the solutions.*
+"""
+
+
+def contains_duplicate(nums):
+    # Your code here
+    num_set = set(nums)
+    if len(num_set) == len(nums):
+        return False
+    else:
+        return True
+
+print(contains_duplicate([1,3,3,2,1]))
+
+
+"""
+Given two strings `a` and `b`, write a function to determine if `a` is an
+**anagram** of `b`.
+*Note: an anagram is a word, phrase, or name formed by rearranging the letters
+of another, such as cinema, formed from iceman.*
+**Example:**
+Input: `a` = "anagram", `b` = "nagaram"
+Output `True`
+**Example:**
+Input: `a` = "bat", `b` = "tar"
+Output `False`
+"""
+
+
+def is_anagram(a, b):
+    # Your code here
+    pass
+
+
 # # """
 # # Example One
 # # """
@@ -66,77 +148,92 @@
 # """
 # Classify the runtime complexity of the sorted_squares function below using Big O notation.
 # """
+import time
+import random
+
+# why do we have big o notation?
+# To evaluate performance
+# to find out the time it takes to complete a function (relative to other input sizes)
+# different computers run at different speeds
+# because we care about efficiency
+# O(n) -- linear
+# O(n^2) -- quadratic
+# O(1) -- constant -- the performance doesn't change regardless of input
+# O(log n) -- logarithmic -- every time we double the input size, we only add one extra step
+# O(2^n) -- exponential
+# factorial
+# O(n log n) -- linearithmic
+"""
+Classify the runtime complexity of the number_of_steps function below using Big O notation.
+"""
 # def number_of_steps(num):
-#     steps = 0
-#     while num > 0:  # loop over each item in the array
-#         print('while')
-#         if num % 2 == 0:  # if the number is even
-#             num = num // 2  # divide the number by 2
-#             print(num)
+#     # overall: O(log n)
+#     # O(1) + O(log n * c) --> O(c log n + 1) --> O(log n)
+#     steps = 0                  # constant O(1)
+#     while num > 0:             # how many times does the loop run? log n times
+#         if num % 2 == 0:       # code w/in the loop is constant
+#             num = num // 2
 #         else:
-#             num = num - 1  # if the number is odd
-#         steps = steps + 1  # increase the step counter
+#             num = num - 1
+#         steps = steps + 1
 #     return steps
-#
-# # print( number_of_steps(5000000))
-# # Logarithmic As the input size increases, the runtime will grow slightly slower. This is a pretty good solution.
-# # O(log n)
-#
+# #
+# # for i in [8, 16, 32, 64]:
+# #     print(f"number_of_steps | N: {i} \tsteps: {number_of_steps(i)}")
+# print("-------")
 # """
 # Classify the runtime complexity of the sorted_squares function below using Big O notation.
 # """
 # def sorted_squares(A):
-#     N = len(A)
-#     j = 0
-#     while j < N and A[j] < 0:  # (while j is less than array length) and (A at
-#         # index j
-#         # is
-#         # less than 0)
-#         j += 1  # increment j
-#     i = j - 1   # set index to j - 1
-#
-#     ans = []
-#     while 0 <= i and j < N:  # (while 0 is less than or equal to index) and (
-#         # j is less than array length)
-#         if A[i]**2 < A[j]**2:   # if A at index of i is less than A at index
-#             # of j
-#             ans.append(A[i]**2)  # add A at index of i squared to the array
+#     # overall runtime complexity? O(4N + 5) --> O(N)
+#     N = len(A)                  # O(1)
+#     j = 0                       # O(1)
+#     while j < N and A[j] < 0:   # how many times does this loop run? at most N times -- O(N)
+#         j += 1                  # O(1)
+#     i = j - 1                   # O(1)
+#     ans = []                    # O(1)
+#     while 0 <= i and j < N:     # how many times does this loop run?  N -- O(N)
+#         if A[i] ** 2 < A[j] ** 2:  # O(1)
+#             ans.append(A[i] ** 2)  # appending to end of the list is usually constant
 #             i -= 1
 #         else:
-#             ans.append(A[j]**2)  # else add A at index of j squared to the array
+#             ans.append(A[j] ** 2)
 #             j += 1
-#
-#     while i >= 0:  # while i is greater than or equal to 0
-#         ans.append(A[i]**2)  # add A at index of i squared to the array
+#     while i >= 0:                   # how many times does this loop run? at most N
+#         ans.append(A[i] ** 2)       # O(1)
 #         i -= 1
 #     while j < N:
-#         ans.append(A[j]**2)  # else add A at index of j squared to the array
+#         ans.append(A[j] ** 2)
 #         j += 1
-#
 #     return ans
-# # print(sorted_squares([10, 2, 3, 4, 5]))
-# #  O(n^2)
-#
+# for i in [100, 1000, 10000]:
+#     a = [j for j in range(-i // 2, i // 2)]
+#     start = time.time()
+#     sorted_squares(a)
+#     end = time.time()
+#     print(f"Sorted Squares | N: {i} \ttime: {end - start}")
 # """
 # Classify the runtime complexity of the insertion_sort function below using Big O notation.
 # """
 # def insertion_sort(arr):
-#     for i in range(1, len(arr)):
-#         key = arr[i]
-#
-#         j = i-1
-#         while j >= 0 and key < arr[j]:
-#             arr[j + 1] = arr[j]
-#             j -= 1
+#     # O(n*n) --> O(n^2)
+#     for i in range(1, len(arr)):    # O(n)
+#         key = arr[i]                # O(1)
+#         j = i - 1                   # O(1)
+#         while j >= 0 and key < arr[j]:  # at most N --> O(n)
+#             arr[j + 1] = arr[j]     # O(1)
+#             j -= 1                  # O(1)
+#             for k in range(len(arr)):
+#                 # this makes it O(n^3)
+#                 # do stuff
 #         arr[j + 1] = key
-#
-#
-# # arr = [4,87,2,7,3,]
-# # insertion_sort(arr)
-# # print(arr)
-# # O(n2)
-#
-#
+# print("-------")
+# for i in [100, 1000, 10000]:
+#     a = [random.randint(0, j) for j in range(i)]
+#     start = time.time()
+#     insertion_sort(a)
+#     end = time.time()
+#     print(f"insertion_sort | N: {i} \ttime: {end - start}")
 # """
 # Use Big O notation to classify the space complexity of the function below.
 # """
@@ -353,64 +450,64 @@
 # For strToSplit = "aaabzaaabb" and k = 10, the output should be goodSubstrings(strToSplit, k) = 3.
 #
 # strToSplit could be split into ["aaab", "z", "aaabb"]. Since the z character has such a large difference with each of its adjacent characters, it must be in a substring of its own.
-def increasingSubstrings(s):
-    string = ''
-    subs = []
-    i = 0
-    if len(s) == 1:
-        subs.append(s[0])
-    else:
-        for i in range(len(s) - 1):
-            # print(s[i])
-            if not string.startswith(s[i]):
-                string = string + s[i]
-            if ord(s[i]) != ord(s[i + 1]) - 1:
-                # print(ord(s[i]))
-                subs.append(string)
-                string = s[i + 1]
-                continue
-        # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
-        if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
-            string = string + s[len(s) - 1]
-        subs.append(string)
-        string = ''
-    return subs
+# def increasingSubstrings(s):
+#     string = ''
+#     subs = []
+#     i = 0
+#     if len(s) == 1:
+#         subs.append(s[0])
+#     else:
+#         for i in range(len(s) - 1):
+#             # print(s[i])
+#             if not string.startswith(s[i]):
+#                 string = string + s[i]
+#             if ord(s[i]) != ord(s[i + 1]) - 1:
+#                 # print(ord(s[i]))
+#                 subs.append(string)
+#                 string = s[i + 1]
+#                 continue
+#         # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
+#         if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
+#             string = string + s[len(s) - 1]
+#         subs.append(string)
+#         string = ''
+#     return subs
 
 
 # strToSplit = "aaabaaabb"
 # k = 0
 # strToSplit = "aaabaaabb"
 # k = 1
-strToSplit = "aaabzaaabb"
-k = 5
-def goodSubstrings(strToSplit, k):
-    smallest = ord(strToSplit[0])
-    largest = 0
-    subs = []
-    s = ''
-    for i in range(len(strToSplit)):
-        # print('Letter', strToSplit[i],
-        #       ord(strToSplit[i]))
-        # print(f'smallest: {smallest} largest: {largest}')
-        if ord(strToSplit[i]) < smallest:
-            smallest = ord(strToSplit[i])
-        if ord(strToSplit[i]) > largest:
-            largest = ord(strToSplit[i])
-
-        if largest - smallest <= k:
-            s = s + strToSplit[i]
-        else:
-            # print(strToSplit[i])
-            subs.append(s)
-            s = strToSplit[i]
-            smallest = ord(strToSplit[i])
-            largest = ord(strToSplit[i])
-            # print(f'smallest at bottom: {smallest}')
-    if len(s) > 0:
-        subs.append(s)
-    # print(s)
-    # print(subs)
-    return len(subs)
-
-
-print(goodSubstrings(strToSplit, k))
+# strToSplit = "aaabzaaabb"
+# k = 5
+# def goodSubstrings(strToSplit, k):
+#     smallest = ord(strToSplit[0])
+#     largest = 0
+#     subs = []
+#     s = ''
+#     for i in range(len(strToSplit)):
+#         # print('Letter', strToSplit[i],
+#         #       ord(strToSplit[i]))
+#         # print(f'smallest: {smallest} largest: {largest}')
+#         if ord(strToSplit[i]) < smallest:
+#             smallest = ord(strToSplit[i])
+#         if ord(strToSplit[i]) > largest:
+#             largest = ord(strToSplit[i])
+#
+#         if largest - smallest <= k:
+#             s = s + strToSplit[i]
+#         else:
+#             # print(strToSplit[i])
+#             subs.append(s)
+#             s = strToSplit[i]
+#             smallest = ord(strToSplit[i])
+#             largest = ord(strToSplit[i])
+#             # print(f'smallest at bottom: {smallest}')
+#     if len(s) > 0:
+#         subs.append(s)
+#     # print(s)
+#     # print(subs)
+#     return len(subs)
+#
+#
+# print(goodSubstrings(strToSplit, k))

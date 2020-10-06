@@ -306,39 +306,53 @@ print(threeCharsDistinct(s))
 #
 # print(countVowelConsonant(s))
 #
-numbers = ["64630488",
-           "6463043",
-           "64630438",
-           "64630412",
-           "64630483",
-           "6463048",
-           "64630498",
-           "64630426",
-           "64630463",
-           "64630439",
-           "6463040",
-           "64630422",
-           "6463049",
-           "6463046",
-           "6463045",
-           "64630420",
-           "6463042",
-           "64630408",
-           "64630418",
-           "64630430"]
+# numbers = ["64630488",
+#            "6463043",
+#            "64630438",
+#            "64630412",
+#            "64630483",
+#            "6463048",
+#            "64630498",
+#            "64630426",
+#            "64630463",
+#            "64630439",
+#            "6463040",
+#            "64630422",
+#            "6463049",
+#            "6463046",
+#            "6463045",
+#            "64630420",
+#            "6463042",
+#            "64630408",
+#            "64630418",
+#            "64630430"]
+#
+#
+# def prefixFreePhones(numbers):
+#     if len(numbers) < 2:
+#         return True
+#     for i in range(len(numbers)):
+#         for num in numbers:
+#             if num.startswith(numbers[i]) and num != numbers[i]:
+#                 return False
+#     return True
+#
+#
+# print(prefixFreePhones(numbers))
 
-
-def prefixFreePhones(numbers):
-    if len(numbers) < 2:
-        return True
-    for i in range(len(numbers)):
-        for num in numbers:
-            if num.startswith(numbers[i]) and num != numbers[i]:
-                return False
-    return True
-
-
-print(prefixFreePhones(numbers))
+# Plan2:
+def contains_duplicate_2(nums):
+    # overall runtime: O(nlogn + n) --> O(n log n)
+    # space complexity: O(1)
+    nums.sort()    # sorting is usually O(n log n)
+                   # nums.sort() sorts it in place
+    # everything below this line is O(n)
+    i = 0          # O(1)
+    while i < len(nums) - 1:      # up to O(n)
+        if nums[i] == nums[i+1]:  # O(1)
+            return True
+        i += 1
+    return False
 
 # n = 15
 #
