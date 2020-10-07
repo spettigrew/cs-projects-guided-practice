@@ -747,41 +747,136 @@ opener can be matched to a closer.*
 
 # code = "{ [ ( ] ) }"
 
+#
+# code = "{ [ }"
+#
+#
+# def is_valid(code):
+#     check = []
+#     if code == '':
+#         return True
+#     if code[0] == ')' or code[0] == '}' or code[0] == ']':
+#         return False
+#
+#     for paren in code:
+#         if paren == ' ':
+#             continue
+#         if paren == '(' or paren == '{' or paren == '[':
+#             print('paren:', paren)
+#             check.append(paren)
+#             print('append:', check)
+#         elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
+#                 == '{' or paren == ']' and check[-1] == '[':
+#
+#                 if len(check) == 0:
+#                     print('len:', len(check))
+#                     return False
+#                 else:
+#                     print('pop:', paren)
+#                     check.pop()
+#         else:
+#             print('else check:', paren, check)
+#             return False
+#
+#     if check:
+#         print('check:', check)
+#         return False
+#     return True
+#
+#
+# print(is_valid(code))
 
-code = "{ [ }"
+"""
+Implement the missing code, denoted by ellipses. You may not modify the pre-existing code.
+Implement a queue using two stacks.
+
+You are given an array of requests, where requests[i] can be "push <x>" or "pop". Return an array composed of the results of each "pop" operation that is performed.
+
+Example
+
+For requests = ["push 1", "push 2", "pop", "push 3", "pop"], the output should be
+queueOnStacks(requests) = [1, 2].
+
+After the first request, the queue is {1}; after the second it is {1, 2}. Then we do the third request, "pop", and add the first element of the queue 1 to the answer array. The queue becomes {2}. After the fourth request, the queue is {2, 3}. Then we perform "pop" again and add 2 to the answer array, and the queue becomes {3}.
+"""
+
+# requests = ["push 1", "push 2", "pop", "push 3", "pop"]
+#
+# class Stack:
+#     def __init__(self):
+#         self.items = []
+#
+#     def isEmpty(self):
+#         return self.items == []
+#
+#     def push(self, item):
+#         self.items.append(item)
+#
+#     def pop(self):
+#         return self.items.pop()
+#
+#
+# def queueOnStacks(requests):
+#     left = Stack()
+#     right = Stack()
+#
+#     def insert(x):
+#         left.push(x)
+#         print('queue:', left.items)
+#
+#
+#     def remove():
+#         if len(right.items) == 0:
+#             while len(left.items) > 0:
+#                 shifted = left.pop()
+#                 right.push(shifted)
+#         return right.items.pop()
+#
+#
+#
+#
+#     ans = []
+#     for request in requests:
+#         req = request.split(" ")
+#         if req[0] == 'push':
+#             insert(int(req[1]))
+#         else:
+#             ans.append(remove())
+#             print('add to ans:', ans)
+#
+#     return ans
+#
+#
+# print(queueOnStacks(requests))
+
+"""
+Given a string sequence consisting of the characters '(', ')', '[', ']', '{', and '}'. Your task is to determine whether or not the sequence is a valid bracket sequence.
+
+The Valid bracket sequence is defined in the following way:
+
+An empty bracket sequence is a valid bracket sequence.
+If S is a valid bracket sequence then (S), [S] and {S} are also valid.
+If A and B are valid bracket sequences then AB is also valid.
+Example
+
+For sequence = "()", the output should be validBracketSequence(sequence) = true;
+For sequence = "()[]{}", the output should be validBracketSequence(sequence) = true;
+For sequence = "(]", the output should be validBracketSequence(sequence) = false;
+For sequence = "([)]", the output should be validBracketSequence(sequence) = false;
+For sequence = "{[]}", the output should be validBracketSequence(sequence) = true.
+"""
+sequence = "()"
+
+# def validBracketSequence(sequence):
+#     pairs = dict(zip('(,[,{', '),],}'))
+#     stack = []
+#     for item in sequence:
+#         if item in pairs:
+#             stack.append(pairs[item])
+#         elif not (stack and item == stack.pop()):
+#             return False
+#     return not stack
 
 
-def is_valid(code):
-    check = []
-    if code == '':
-        return True
-    if code[0] == ')' or code[0] == '}' or code[0] == ']':
-        return False
 
-    for paren in code:
-        if paren == ' ':
-            continue
-        if paren == '(' or paren == '{' or paren == '[':
-            print('paren:', paren)
-            check.append(paren)
-            print('append:', check)
-        elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
-                == '{' or paren == ']' and check[-1] == '[':
-
-                if len(check) == 0:
-                    print('len:', len(check))
-                    return False
-                else:
-                    print('pop:', paren)
-                    check.pop()
-        else:
-            print('else check:', paren, check)
-            return False
-
-    if check:
-        print('check:', check)
-        return False
-    return True
-
-
-print(is_valid(code))
+print(validBracketSequence(sequence))
