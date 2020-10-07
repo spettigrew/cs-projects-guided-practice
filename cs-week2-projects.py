@@ -285,13 +285,13 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # # numbers = [2, 0, 0, 0]
 # #
 # #
-# # def removeEvens(numbers):
-# #     return [num for num in numbers if num % 2 != 0]
-# #     # below code didn't pass tests above did
-# #     # for num in numbers:
-# #     #     if num % 2 == 0 and num != 0:
-# #     #         numbers.remove(num)
-# #     # return numbers
+# def removeEvens(numbers):
+#     return [num for num in numbers if num % 2 != 0]
+    # below code didn't pass tests above did
+    # for num in numbers:
+    #     if num % 2 == 0 and num != 0:
+    #         numbers.remove(num)
+    # return numbers
 # #
 # #
 # # print(removeEvens(numbers))

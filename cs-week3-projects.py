@@ -372,7 +372,6 @@ For l1 = [1, 1, 2, 4] and l2 = [0, 3, 5], the output should be
 mergeTwoLinkedLists(l1, l2) = [0, 1, 1, 2, 3, 4, 5].
 """
 
-
 # Singly-linked lists are already defined with this interface:
 # class ListNode(object):
 #   def __init__(self, x):
@@ -426,7 +425,6 @@ reverseNodesInKGroups(l, k) = [1, 2, 3, 4, 5];
 For l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] and k = 3, the output should be
 reverseNodesInKGroups(l, k) = [3, 2, 1, 6, 5, 4, 9, 8, 7, 10, 11].
 """
-
 
 # Singly-linked lists are already defined with this interface:
 # class ListNode(object):
@@ -485,3 +483,305 @@ reverseNodesInKGroups(l, k) = [3, 2, 1, 6, 5, 4, 9, 8, 7, 10, 11].
 #         # set the last reversed to the current
 #         old_reversed = current
 #
+
+
+"""
+Refactor the Queue class below by adding an `is_empty` method. After writing this method, refactor your other methods to use this method in your other methods.
+"""
+
+#
+# class LinkedListNode:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
+#
+#
+# class Queue:
+#     def __init__(self):
+#         self.front = None
+#         self.rear = None
+#
+#     def enqueue(self, item):
+#         new_node = LinkedListNode(item)
+#         # check if queue is empty
+#         if self.is_empty():
+#             self.front = new_node
+#             self.rear = new_node
+#         else:
+#             # add new node to rear
+#             self.rear.next = new_node
+#             # reassign rear to new node
+#             self.rear = new_node
+#
+#     def dequeue(self):
+#         # check if queue is empty
+#         if not self.is_empty():
+#             # keep copy of old front
+#             old_front = self.front
+#             # set new front
+#             self.front = old_front.next
+#
+#         # check if the queue is now empty
+#         if self.is_empty():
+#             # make sure rear is also None
+#             self.rear = None
+#
+#         return old_front
+#
+#     # my code to check if the queue is empty
+#     def is_empty(self):
+#         return self.front is None and self.rear is None
+
+
+"""
+Add a peek method to the Stack class. The peek method should return the value of the top item in the stack without actually removing it from the stack.
+"""
+
+#
+# class Stack:
+#     def __init__(self):
+#         self.data = []
+#
+#     def push(self, item):
+#         self.data.append(item)
+#
+#     # my code for peek method
+#     def peek(self, item):
+#         return self.data[-1]
+#
+#     def pop(self):
+#         if len(self.data) > 0:
+#             return self.data.pop()
+#         return "The stack is empty"
+
+
+"""
+Add a peek method to the Stack class below. The peek method should return the value of the node that is at the top of the stack without actually removing it from the stack.
+"""
+
+# class LinkedListNode:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
+#
+#
+# class Stack:
+#     def __init__(self):
+#         self.top = None
+#
+#     def push(self, data):
+#         # create new node with data
+#         new_node = LinkedListNode(data)
+#         # set current top to new node's next
+#         new_node.next = self.top
+#         # reset the top pointer to the new node
+#         self.top = new_node
+#
+#     def pop(self):
+#         # make sure stack is not empty
+#         if self.top is not None:
+#             # store popped node
+#             popped_node = self.top
+#             # reset top pointer to next node
+#             self.top = popped_node.next
+#             # return the value from the popped node
+#             return popped_node.data
+#
+#     # my code for peek method
+#     def peek(self):
+#         if self.top is not None:
+#             return self.top
+
+
+"""
+Queues and stacks guided
+"""
+
+"""
+You've encountered a situation where you want to easily be able to pull the
+largest integer from a stack.
+You already have a `Stack` class that you've implemented using a dynamic array.
+Use this `Stack` class to implement a new class `MaxStack` with a method
+`get_max()` that returns the largest element in the stack. `get_max()` should
+not remove the item.
+*Note: Your stacks will contain only integers. You should be able to get a
+runtime of O(1) for push(), pop(), and get_max().*
+"""
+
+
+class Stack(object):
+    def __init__(self):
+        """Initialize an empty stack"""
+        self.items = []
+
+    def push(self, item):
+        """Push a new item onto the stack"""
+        self.items.append(item)
+
+    def pop(self):
+        """Remove and return the last item"""
+        # If the stack is empty, return None
+        # (it would also be reasonable to throw an exception)
+        if not self.items:
+            return None
+
+        return self.items.pop()
+
+    def peek(self):
+        """Return the last item without removing it"""
+        if not self.items:
+            return None
+        return self.items[-1]
+
+
+# class MaxStack(object):
+#     def __init__(self):
+#     # Your code here
+#         self.head = []
+#         self.max_value = None
+#
+#     def push(self, item):
+#         """Add a new item onto the top of our stack."""
+#         # Your code here
+#         self.head.append(item)
+#         self.max_value = max(max(self.head), item)
+#
+#     def pop(self):
+#         """Remove and return the top item from our stack."""
+#         # Your code here
+#         if not self.head:
+#             return None
+#
+#         self.head.pop()
+#         self.max_value = max(self.head)
+#
+#     def get_max(self):
+#         """The last item in maxes_stack is the max item in our stack."""
+#         # Your code here
+#         return self.max_value
+#
+# max_stack = MaxStack()
+# max_stack.push(1)
+# max_stack.push(2)
+# max_stack.push(5)
+# max_stack.pop()
+# print(max_stack.get_max())
+
+"""
+Your goal is to define a `Queue` class that uses two stacks. Your `Queue` class
+should have an `enqueue()` method and a `dequeue()` method that ensures a
+"first in first out" (FIFO) order.
+As you write your methods, you should optimize for time on the `enqueue()` and
+`dequeue()` method calls.
+The Stack class that you will use has been provided to you.
+"""
+
+
+class Stack:
+    def __init__(self):
+        self.data = []
+
+    def push(self, item):
+        self.data.append(item)
+
+    def pop(self):
+        if len(self.data) > 0:
+            return self.data.pop()
+        return "The stack is empty"
+
+
+class QueueTwoStacks:
+    def __init__(self):
+        # Your code here
+        self.stack1 = Stack()
+        self.stack2 = Stack()
+
+    def enqueue(self, item):
+        # Your code here
+        self.stack1.push(item)
+
+    def dequeue(self):
+        # Your code here
+        if len(self.stack1.data) != 0:
+            shifted = self.stack1.pop()
+            self.stack2.push(shifted)
+            return self.dequeue()
+        else:
+            if len(self.stack2.data) != 0:
+                last_item = self.stack2.pop()
+                return last_item
+
+
+# queue = QueueTwoStacks()
+# queue.enqueue(1)
+# queue.enqueue(3)
+# queue.enqueue(5)
+# print('deque:', queue.dequeue())
+# print('stack1:', queue.stack1.data)
+# print('stack2:', queue.stack2.data)
+
+"""
+A colleague of yours keeps including incorrect JavaScript code in pull
+requests. You are getting tired of parsing through their code to make sure
+they've included correct brackets, braces, and parentheses.
+In order to save yourself time, you decide to write a function that can parse
+the code to make sure it includes the correct amount of opening and closing
+characters.
+We will call `(`, `{`, and `[` "openers".
+We will call `)`, `}`, and `]` "closers".
+Your input will be a string and your function needs to make sure that there is
+a correct number of openers and closers and that they are properly nested.
+Examples:
+`"{ [ ] ( ) }"` should return `True`
+`"{ [ ( ] ) }"` should return `False`
+`"{ [ }"` should return `False`
+You should be able to do this in one pass with O(n) time and O(n) space
+complexity.
+*Note: Remember that just making sure that each opener has a corresponding
+closer is not enough. You also have to confirm that they are ordered and nested
+correctly. For example, "{ [ ( ] ) }" should return False, even though each
+opener can be matched to a closer.*
+"""
+
+# code = "{ [ ] ( ) }"
+
+# code = "{ [ ( ] ) }"
+
+
+code = "{ [ }"
+
+
+def is_valid(code):
+    check = []
+    if code == '':
+        return True
+    if code[0] == ')' or code[0] == '}' or code[0] == ']':
+        return False
+
+    for paren in code:
+        if paren == ' ':
+            continue
+        if paren == '(' or paren == '{' or paren == '[':
+            print('paren:', paren)
+            check.append(paren)
+            print('append:', check)
+        elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
+                == '{' or paren == ']' and check[-1] == '[':
+
+                if len(check) == 0:
+                    print('len:', len(check))
+                    return False
+                else:
+                    print('pop:', paren)
+                    check.pop()
+        else:
+            print('else check:', paren, check)
+            return False
+
+    if check:
+        print('check:', check)
+        return False
+    return True
+
+
+print(is_valid(code))
