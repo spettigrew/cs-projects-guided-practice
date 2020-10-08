@@ -58,8 +58,8 @@ def contains_duplicate(nums):
     else:
         return True
 
-print(contains_duplicate([1,3,3,2,1]))
 
+print(contains_duplicate([1, 3, 3, 2, 1]))
 
 """
 Given two strings `a` and `b`, write a function to determine if `a` is an
@@ -287,11 +287,11 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # #
 # def removeEvens(numbers):
 #     return [num for num in numbers if num % 2 != 0]
-    # below code didn't pass tests above did
-    # for num in numbers:
-    #     if num % 2 == 0 and num != 0:
-    #         numbers.remove(num)
-    # return numbers
+# below code didn't pass tests above did
+# for num in numbers:
+#     if num % 2 == 0 and num != 0:
+#         numbers.remove(num)
+# return numbers
 # #
 # #
 # # print(removeEvens(numbers))
@@ -511,3 +511,129 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 #
 #
 # print(goodSubstrings(strToSplit, k))
+
+"""
+computer memory basics guided
+"""
+
+"""
+Given a string, implement a function that returns the string with all lowercase
+characters.
+Example 1:
+Input: "LambdaSchool"
+Output: "lambdaschool"
+Example 2:
+Input: "austen"
+Output: "austen"
+Example 3:
+Input: "LLAMA"
+Output: "llama"
+*Note: You must implement the function without using the built-in method on
+string objects in Python. Think about how character encoding works and explore
+if there is a mathematical approach that you can take.*
+"""
+
+string = "LambdaSchool"
+
+
+def to_lower_case(string):
+    result = ''
+    for i in range(len(string)):
+        if ord(string[i]) <= 90 or ord(string[i]) <= 65:
+            result += chr(ord(string[i]) + 32)
+        else:
+            result += string[i]
+    return result
+
+
+# print(to_lower_case(string))
+
+
+"""
+In order to solve this challenge you will need to [review the rules of Roman
+Numerals](https://www.mathsisfun.com/roman-numerals.html).
+Given a Roman Numeral (as a string), convert it to an integer. Your input is
+guaranteed to be a Roman Numeral value from 1 to 3999.
+Example 1:
+Input: "IV"
+Output: 4
+Example 2:
+Input: "XII"
+Output: 12
+Example 3:
+Input: "MCMLXXXIV"
+Output: 1984
+"""
+
+roman = 'IV'
+roman = 'XII'
+roman = "MCMLXXXIV"
+
+#  TODO finish this!
+def roman_to_integer(roman):
+    numerals = {
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000,
+    }
+    # get the digits for each letter
+    digits = []
+    ordered = []
+    if len(roman) < 2:
+        return numerals.get(roman)
+    tally = 0
+    for i in range(len(roman)):
+        digits.append(numerals.get(roman[i]))
+    ordered = sorted(digits, reverse=True)
+    # if the numbers are descending just sum them up
+    if ordered == digits:
+        return sum(digits)
+    else:
+        i, j = 0, 1
+        print(digits)
+        for _ in range(len(digits) - 1):
+            if digits[i] < digits[j]:
+                tally += digits[j] - digits[i]
+            else:
+                print('i:', digits[i])
+                print('j:', digits[j])
+                tally += digits[i] + digits[j]
+            i += 1
+            j += 1
+    return tally
+
+
+# print(roman_to_integer(roman))
+
+"""
+Given a list of integers `lst`, any integer with a frequency that is equal to its value is considered a **lucky integer**.
+Write a function that returns the lucky integer from the array. If the array contains multiple lucky integers, return the largest one. If there are no lucky integers return -1.
+**Example 1**:
+Input: arr = [2,3,3,3,4]
+Output: 3
+**Example 2**:
+Input: arr = [1,2,2,3,3,3,4,4,4,4]
+Output: 4
+**Example 3**:
+Input: arr = [1,1,2,2,2]
+Output: -1
+"""
+
+lst = [2, 2, 3, 3, 3, 4, 4, 4, 4]
+
+#  O(n^2) because counting in the loop...
+def find_lucky(lst):
+    lucky = []
+    for num in lst:
+        if num == lst.count(num):
+            lucky.append(num)
+    if not lucky:
+        return -1
+    return max(lucky)
+
+
+# print(find_lucky(lst))
