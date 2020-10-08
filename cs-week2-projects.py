@@ -59,7 +59,7 @@ def contains_duplicate(nums):
         return True
 
 
-print(contains_duplicate([1, 3, 3, 2, 1]))
+# print(contains_duplicate([1, 3, 3, 2, 1]))
 
 """
 Given two strings `a` and `b`, write a function to determine if `a` is an
@@ -569,6 +569,7 @@ roman = 'IV'
 roman = 'XII'
 roman = "MCMLXXXIV"
 
+
 #  TODO finish this!
 def roman_to_integer(roman):
     numerals = {
@@ -625,6 +626,7 @@ Output: -1
 
 lst = [2, 2, 3, 3, 3, 4, 4, 4, 4]
 
+
 #  O(n^2) because counting in the loop...
 def find_lucky(lst):
     lucky = []
@@ -637,3 +639,203 @@ def find_lucky(lst):
 
 
 # print(find_lucky(lst))
+
+"""
+Challenge
+Write a logarithmic expression that is identical to this exponential expression:
+
+2^n = 64
+log_2 64 = 6
+
+Write an exponential expression that is identical to this logarithmic expression:
+
+log_2 128 = n
+2^7 = 128
+
+What keywords should you look out for that might alert you that logarithms are involved?
+doubles, halves
+"""
+
+"""
+Rewrite the implementation of linear search below so that the algorithm searches from the end of the list to the beginning.
+"""
+
+
+def linear_search(arr, target):
+    # loop through each item in the input array
+    i = len(arr) - 1
+    for idx in range(len(arr)):
+        # check if the item at the current index is equal to the target
+        if arr[i] == target:
+            # return the current index as the match
+            return i
+        i -= 1
+    # if we were able to loop through the entire array, the target is not present
+    return -1
+
+
+arr = [1, 2, 3, 4, 5, 6]
+target = 3
+# print(linear_search(arr, target))
+
+
+"""
+Write a recursive search function that receives as input an array of integers and a target integer value. This function should return True if the target element exists in the array, and False otherwise.
+What would be the base case(s) we'd have to consider for implementing this function?
+How should our recursive solution converge on our base case(s)?
+
+In your own words, write out the three rules for recursion and how you can identify when a problem is amenable to using a recursive method.
+- problem has an obvious base case
+- the data changes predictably on the way to the base case 
+- the function must call itself
+"""
+
+
+def recursive_search(arr, target):
+    if arr[0] == target:
+        return True
+    elif len(arr[1:]) > 1:
+        return recursive_search(arr[1:], target)
+    return False
+
+
+# print(recursive_search(arr, target))
+
+
+"""
+Binary Search
+"""
+
+
+def binary_search(arr, target):
+    # 1. Declare min = 0 and max = length of array - 1
+    min = 0
+    max = len(arr) - 1
+    while not max < min:
+        # 2. Figure out the guess value by getting the middle integer between min and max
+        guess = (max + min) // 2
+        # 3. if array[guess] equals the target, we found the element, return the index
+        if arr[guess] == target:
+            return guess
+        # 4. if the guess was too low, reset min to be one more than the guess
+        elif arr[guess] < target:
+            min = guess + 1
+        # 5. if the guess was too high, reset max to be one less than the guess
+        else:
+            max = guess - 1
+    # no match was found
+    return -1
+
+
+# target = 5
+# print(binary_search(arr, target))
+
+"""
+What is the time complexity of our binary_search function above?
+- logN
+Can you turn the function above into a recursive function? Any variables tracked/updated in the while loop will have to become parameters for the recursive function.
+"""
+arr = [1, 2, 3, 4, 5, 6]
+target = 55
+
+
+def binary_recursive_search(arr, target, min_index, max_index):
+    if min_index >= max_index:
+        return -1
+    guess = (max_index + min_index) // 2
+    if arr[guess] == target:
+        return guess
+    elif target < arr[guess]:
+        return binary_recursive_search(arr, target, min_index, guess - 1)
+    else:
+        return binary_recursive_search(arr, target, guess + 1, max_index)
+
+# print(binary_recursive_search(arr, target, 0, len(arr)))
+
+"""
+Searching-recursion guided
+"""
+
+"""
+I was bored one day and decided to look at last names in the phonebook for my
+area.
+I flipped open the phonebook to a random page near the middle and started
+perusing. I wrote each last name that I was unfamiliar with down on paper in
+increasing order. When I got to the end of the phonebook, I was having so much
+fun I decided to start from the beginning and keep going until I reached the
+page where I had started.
+When I was finished, I had a list of interesting last names that were mostly
+alphabetical. The problem was that my list starts somehere near the middle of
+the alphabet, reaches the end, and then starts from the beginning of the
+alphabet. In other words, my list of names is sorted, but it is "rotated."
+Example:
+surnames = [
+    'liu',
+    'mcdowell',
+    'nixon',
+    'sparks',
+    'zhang',
+    'ahmed',  # <-- rotates here!
+    'brandt',
+    'davenport',
+    'farley',
+    'glover',
+    'kennedy',
+]
+Write a function that finds the index of the "rotation point". The "rotation
+point" is where I started working from the beginning of the phone book. The
+list I came up was absolutely huge, so make sure your solution is efficient.
+*Note: you should be able to come up with a solution that has O(log n) time
+complexity.*
+"""
+def find_rotation_point(surnames):
+    # Your code here
+    pass
+
+"""
+You are a new author that is working on your first book. You are working on a
+series of drafts. Each draft is based on the previous draft. The latest draft
+of your book has a serious typo. Since each newer draft is based on the
+previous draft, all the drafts after the draft containing the typo also include
+the typo.
+Suppose you have `n` drafts `[1, 2, 3, ..., n]` and you need to find out the
+first one containing the typo (which causes all the following drafts to have
+the typo as well).
+You are given access to an API tool `containsTypo(draft)` that will return
+`True` if the draft contains a typo and `False` if it does not.
+You need to implement a function that will find the *first draft that contains
+a typo*. Also, you have to pay a fee for every call to `containsTypo()`, so
+make sure that your solution minimizes the number of API calls.
+Example:
+Given `n = 5`, and `draft = 4` is the first draft containing a typo.
+containsTypo(3) -> False
+containsTypo(5) -> True
+containsTypo(4) -> True
+"""
+def firstDraftWithTypo(n):
+    # Your code here
+    pass
+
+"""
+Cookie Monster can eat either 1, 2, or 3 cookies at a time. If he were given a
+jar of cookies with `n` cookies inside of it, how many ways could he eat all
+`n` cookies in the cookie jar? Implement a function `eating_cookies` that
+counts the number of possible ways Cookie Monster can eat all of the cookies in
+the jar.
+For example, for a jar of cookies with n = 3 (the jar has 3 cookies inside it),
+there are 4 possible ways for Cookie Monster to eat all the cookies inside it:
+He can eat 1 cookie at a time 3 times
+He can eat 1 cookie, then 2 cookies
+He can eat 2 cookies, then 1 cookie
+He can eat 3 cookies all at once.
+Thus, eating_cookies(3) should return an answer of 4.
+Can you implement a solution that has a O(n) time complexity and a O(n) space
+complexity?
+*Note: Since this question is asking you to generate a bunch of possible
+permutations, you'll probably want to use recursion for this. Think about base
+cases that we would want our recursive function to stop recursing on (when do
+you know you've found a "way" to eat the cookies versus when you have not?).*
+"""
+def eating_cookies(n, cache = None):
+    # Your code here
+    pass
