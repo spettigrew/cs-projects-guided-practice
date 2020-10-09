@@ -395,8 +395,7 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 #     if param1 > param2:
 #         larger = param1
 #     else:
-#         larger = param2
-#
+#         larger = param2#
 #     # using the index of the larger do the addition
 #     count = 0
 #     for i in range(len(str(larger))):
@@ -750,6 +749,7 @@ def binary_recursive_search(arr, target, min_index, max_index):
     else:
         return binary_recursive_search(arr, target, guess + 1, max_index)
 
+
 # print(binary_recursive_search(arr, target, 0, len(arr)))
 
 """
@@ -765,7 +765,7 @@ increasing order. When I got to the end of the phonebook, I was having so much
 fun I decided to start from the beginning and keep going until I reached the
 page where I had started.
 When I was finished, I had a list of interesting last names that were mostly
-alphabetical. The problem was that my list starts somehere near the middle of
+alphabetical. The problem was that my list starts somewhere near the middle of
 the alphabet, reaches the end, and then starts from the beginning of the
 alphabet. In other words, my list of names is sorted, but it is "rotated."
 Example:
@@ -788,9 +788,39 @@ list I came up was absolutely huge, so make sure your solution is efficient.
 *Note: you should be able to come up with a solution that has O(log n) time
 complexity.*
 """
+
+surnames = [
+    'sparks',
+    'zhang',
+    'liu',
+    'ahmed',  # <-- rotates here!
+    'brandt',
+    'davenport',
+    'farley',
+    'glover',
+    'kennedy',
+    'mcdowell',
+    'nixon',
+]
+
+
 def find_rotation_point(surnames):
     # Your code here
-    pass
+    min = 0
+    max = len(surnames) - 1
+    while not max < min:
+        guess = (min + max) // 2
+        if surnames[guess] < surnames[guess + 1] and surnames[guess] < surnames[
+            guess - 1]:
+            return guess
+        else:
+            if surnames[guess] > surnames[guess - 1]:
+                max = guess + 1
+            elif surnames[guess] < surnames[guess + 1]:
+                min = guess - 1
+
+
+# print(find_rotation_point(surnames))
 
 """
 You are a new author that is working on your first book. You are working on a
@@ -812,9 +842,34 @@ containsTypo(3) -> False
 containsTypo(5) -> True
 containsTypo(4) -> True
 """
+
+n = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
 def firstDraftWithTypo(n):
     # Your code here
     pass
+    contains_typo = 4
+    min = 0
+    max = len(n) - 1
+    while not max < min:
+        guess = (min + max) // 2
+        print(n[guess])
+        # if containsTypo were real this line would be:
+        # if containsTypo(n[guess]) and not containsTypo(n[guess -1]):
+        if n[guess] == contains_typo and n[guess - 1] != contains_typo:
+            # resulting in the first occurrence where the typo exists
+            return guess
+        # if containsTypo were real this line would be:
+        # if not containsTypo(n[guess]):
+        elif n[guess] < contains_typo:
+            min = guess + 1
+        else:
+            max = guess - 1
+    return -1
+
+
+# print(firstDraftWithTypo(n))
 
 """
 Cookie Monster can eat either 1, 2, or 3 cookies at a time. If he were given a
@@ -836,6 +891,51 @@ permutations, you'll probably want to use recursion for this. Think about base
 cases that we would want our recursive function to stop recursing on (when do
 you know you've found a "way" to eat the cookies versus when you have not?).*
 """
-def eating_cookies(n, cache = None):
-    # Your code here
-    pass
+
+"""
+1
+1 once
+= 1
+********
+2
+1 twice
+2 once
+= 2
+*********
+3
+1 1 1 
+1 and 2
+2 and 1
+3 once
+********
+"""
+
+n = 3
+
+
+def eating_cookies(n, cache=None):
+    # if n < 0:
+    #     return 0
+    # if n == 0:
+    #     return 1
+    # return eating_cookies(n-1) + eating_cookies(n - 2) + eating_cookies(n -3)
+
+    # let the cache be 2 longer than n
+    cache = [0] * (n + 2)
+    print(cache)
+    cache[0] = 1
+    cache[1] = 1
+    cache[2] = 2
+    for i in range(3, n + 1):
+        print('*******i:', i)
+        print(
+            f'cache[i]: {cache[i]} = cache[i - 1]: {cache[i - 1]} + cache[i - 2]: {cache[i - 2]} + cache[i - 3]: {cache[i - 3]}')
+        cache[i] = cache[i - 1] + cache[i - 2] + cache[i - 3]
+    return cache[n]
+
+
+"""
+when he has n cookies, he has three options: eat 1 cookie, eat 2 cookie, or eat 3 cookies. So if you go down each of those options, he then has n - x more cookies to eat, and y ways to eat that amount of cookies. So you can basically sum up the number of ways to eat (n-1) cookies + ways to eat (n-2) cookies + ways to eat (n-3) cookies
+"""
+
+# print(eating_cookies(n))
