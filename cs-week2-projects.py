@@ -939,3 +939,88 @@ when he has n cookies, he has three options: eat 1 cookie, eat 2 cookie, or eat 
 """
 
 # print(eating_cookies(n))
+
+"""
+Sprint 1
+"""
+
+"""
+Given a string, remove adjacent duplicate characters.
+
+Example
+
+For s = "aaaaa", the output should be
+removeAdjacent(s) = "a";
+For s = "abccaaab", the output should be
+removeAdjacent(s) = "abcab".
+"""
+
+# s = "aaaaa"
+# s = "abccaaab"
+
+def removeAdjacent(s):
+    # add first letter to new string
+    if s == '':
+        return s
+    new_str = s[0]
+    # iterate the string
+    for letter in s:
+        # if the next letter is the same as previous continue
+        if letter == new_str[len(new_str) - 1]:
+            continue
+        else:
+            new_str += letter
+    return new_str
+
+# print(removeAdjacent(s))
+
+"""
+Write a function to reverse the given string (the input string is given as an array of characters) and return the result.
+
+Note: your solution should be "in-place" with O(1) space complexity. Although many in-place functions do not return the modified input, in this case you should.
+
+Hint: you should try using a "two-pointers approach".
+
+[execution time limit] 4 seconds (py3)
+
+[input] array.char input
+
+[output] array.char
+"""
+
+str = 'reverse'
+
+def reverse_String(str):
+    i, j = 0, len(str) - 1
+    print(i, j)
+    while i < j:
+        str[i], str[j] = str[j], str[i]
+        i += 1
+        j -= 1
+    return str
+
+
+# print(reverse_String(str))
+
+"""
+Given the string, check if it is a palindrome.
+
+Example
+
+For inputString = "aabaa", the output should be
+checkPalindrome(inputString) = true;
+For inputString = "abac", the output should be
+checkPalindrome(inputString) = false;
+For inputString = "a", the output should be
+checkPalindrome(inputString) = true.
+"""
+
+inputString = "aabaa"
+# inputString = "abac"
+# inputString = "a"
+inputString = "hlbeeykoqqqqokyeeblh"
+
+def checkPalindrome(inputString):
+    return inputString == inputString[::-1]
+
+# print(checkPalindrome(inputString))
