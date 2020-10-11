@@ -147,6 +147,7 @@ def naive_fill_knapsack(sack, items):
 
     return sack
 
+
 # not working and awful solution will take years w large cave
 # def brute_force_fill_knapsack(sack, items):
 #     """
@@ -229,20 +230,20 @@ def greedy_fill_knapsack(sack, items):  # O(n log n) because of the sort
 
 #  Test
 
-fill_cave_with_items()
-knapsack = []
-#  test greedy
-print(f'Starting greedy approach test...')
-items = medium_cave
-start = time.time()
-greedy_fill_knapsack(knapsack, items)
-print_results(items, knapsack)
-
-print(f'Starting naive approach test...')
-items = medium_cave
-start = time.time()
-naive_fill_knapsack(knapsack, items)
-print_results(items, knapsack)
+# fill_cave_with_items()
+# knapsack = []
+# #  test greedy
+# print(f'Starting greedy approach test...')
+# items = medium_cave
+# start = time.time()
+# greedy_fill_knapsack(knapsack, items)
+# print_results(items, knapsack)
+#
+# print(f'Starting naive approach test...')
+# items = medium_cave
+# start = time.time()
+# naive_fill_knapsack(knapsack, items)
+# print_results(items, knapsack)
 
 # print(f'Starting brute force approach test...')
 # items = medium_cave
@@ -250,8 +251,100 @@ print_results(items, knapsack)
 # brute_force_fill_knapsack(knapsack, items)
 # print_results(items, knapsack)
 
+#  fibonacci bottom up approach
+
+def fib(n):
+    f = [0, 1]
+
+    if n <= 1:
+        return f[n]
+
+    for i in range(2, n):
+        # add the previous two numbers
+        next_fib = f[i - 1] + f[i - 2]
+        # another way to do it
+        next_fib = f[- 1] + f[- 2]
+        # append the answer to create the sequence
+        f.append(next_fib)
+
+    print(f)
+
+
+# for i in range(2, 10):
+#     fib(i)
+
+
+"""
+Anagram algo (what words have the most anagrams in a dictionary of words)
+ex: listen, silent
+"""
+# brute force approach with list O(n^2)
+
+words = []
+with open('words.txt') as f:
+    for w in f:
+        w = w.strip()
+        words.append(w)
+
+
+# with dictionary
+
+# words = {}
+#
+# with open('words.txt') as f:
+#     for w in f:
+#         w = w.strip()
+#         # key is the length of the word
+#         l = len(w)
+#         if l not in words:
+#             words[l] = []
+#         words[l].append(w)
+
+# function to compare 2 words and tell if they are anagrams
+def is_anagram(word1, word2):
+    return sorted(word1) == sorted(word2)
+
+
+def brute_force_anagrams():
+    # for wordlen in range(15, 31):
+    #     for word1 in words[wordlen]:
+    #         for word2 in words[wordlen]:
+    #             if word1 == word2:
+    #                 continue
+    #             if is_anagram(word1, word2):
+    #                 print(word1, word2)
+
+    # using a signature O(N)
+    result = {}
+    results_by_len = {}
+    longest_sig = None
+    longest_len = -1
+    for w in words:
+        signature = ''.join(sorted(w))
+
+        if signature not in result:
+            result[signature] = []
+
+        result[signature].append(w)
+
+        if len(result[signature]) >= longest_len:
+            longest_len = len(result[signature])
+            longest_sig = signature
+
+    for sig in result:
+        l = len(result[sig])
+        if l not in results_by_len:
+            results_by_len[l] = []
+        results_by_len[l].append(result[sig])
+    pprint(results_by_len[15])
+    return result[longest_sig]
+
+
+from pprint import pprint
+
+# print(sorted(words.keys()))
+pprint(brute_force_anagrams())
 
 """
 Algorithms old cs project
 """
-
