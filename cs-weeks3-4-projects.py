@@ -124,29 +124,30 @@ prices = [3, 100, 1, 97]
 #     else:
 #         return highest_profit
 
-# prices = [6, 3, 1, 2, 5, 4]
-# prices = [8, 5, 3, 1]
-# prices = [3, 100, 1, 97]
-#
-# def buyAndSellStock(prices):
-#     length = len(prices)
-#     # iterate array, for each item after subtract and store the amount as
-#     # highest profit.. replace if needed with a higher profit
-#     if prices == sorted(prices, reverse=True) or len(prices) < 2:
-#         return 0
-#     highest_profit = prices[1] - prices[0]
-#     smallest_number = prices[0]
-#     for i in range(1, length):
-#         # only check if the selected number minus the smallest number before
-#         # it is larger than the highest profit to avoid unnecessary checks
-#         if prices[i] - smallest_number > highest_profit:
-#             highest_profit = prices[i] - smallest_number
-#         if prices[i] < smallest_number:
-#             smallest_number = prices[i]
-#
-#     return highest_profit
-#
-#
+prices = [6, 3, 1, 2, 5, 4]
+prices = [8, 5, 3, 1]
+prices = [3, 100, 1, 97]
+
+
+def buyAndSellStock(prices):
+    length = len(prices)
+    # iterate array, for each item after subtract and store the amount as
+    # highest profit.. replace if needed with a higher profit
+    if prices == sorted(prices, reverse=True) or len(prices) < 2:
+        return 0
+    highest_profit = prices[1] - prices[0]
+    smallest_number = prices[0]
+    for i in range(1, length):
+        # only check if the selected number minus the smallest number before
+        # it is larger than the highest profit to avoid unnecessary checks
+        if prices[i] - smallest_number > highest_profit:
+            highest_profit = prices[i] - smallest_number
+        if prices[i] < smallest_number:
+            smallest_number = prices[i]
+
+    return highest_profit
+
+
 # print(buyAndSellStock(prices))
 
 """
@@ -157,18 +158,19 @@ Example
 For inputString = "crazy", the output should be alphabeticShift(inputString) = "dsbaz".
 """
 
-# inputString = "crazy"
+inputString = "crazy"
 
-# def alphabeticShift(inputString):
-#     new_string = ''
-#     for letter in inputString:
-#         new_letter = ord(letter) + 1
-#         if new_letter == 123:
-#             new_letter = 97
-#         new_string += chr(new_letter)
-#     return new_string
-#
-#
+
+def alphabeticShift(inputString):
+    new_string = ''
+    for letter in inputString:
+        new_letter = ord(letter) + 1
+        if new_letter == 123:
+            new_letter = 97
+        new_string += chr(new_letter)
+    return new_string
+
+
 # print(alphabeticShift(inputString))
 
 
@@ -182,31 +184,31 @@ validParenthesesSequence(s) = true;
 For s = "()()())", the output should be
 validParenthesesSequence(s) = false
 """
-#
-# s = "()()(())"
-#
-#
-# s = "()()())"
-#
-# def validParenthesesSequence(s):
-#     check = []
-#     if s == '':
-#         return True
-#     if s[0] == ')':
-#         return False
-#     for paren in s:
-#         if paren == '(':
-#             check.append(paren)
-#         else:
-#             if len(check) == 0:
-#                 return False
-#             else:
-#                 check.pop()
-#     if check != []:
-#         return False
-#     return True
-#
-#
+
+s = "()()(())"
+
+s = "()()())"
+
+
+def validParenthesesSequence(s):
+    check = []
+    if s == '':
+        return True
+    if s[0] == ')':
+        return False
+    for paren in s:
+        if paren == '(':
+            check.append(paren)
+        else:
+            if len(check) == 0:
+                return False
+            else:
+                check.pop()
+    if check != []:
+        return False
+    return True
+
+
 # print(validParenthesesSequence(s))
 
 
@@ -230,11 +232,14 @@ delete_node(y)
 ```
 *Note: We can do this in O(1) time and space! But be aware that our solution will have some side effects...*
 """
-# class LinkedListNode():
-#     def __init__(self, value):
-#         self.value = value
-#         self.next  = None
-#
+
+
+class LinkedListNode():
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
 # def delete_node(node_to_delete):
 #     head = x
 #     prev = None
@@ -246,10 +251,8 @@ delete_node(y)
 #         head = current
 #     else:
 #         prev.next = current.next
-#
-#
-#
-#
+
+
 # x = LinkedListNode('X')
 # y = LinkedListNode('Y')
 # z = LinkedListNode('Z')
@@ -274,38 +277,43 @@ once.
 running your function by hand. Does it actually work? Also, don't forget to
 consider edge cases (like a list with only 1 or 0 elements).*
 """
-# class LinkedListNode():
-#     def __init__(self, value):
-#         self.value = value
-#         self.next  = None
-#
-# def reverse(head_of_list):
-#     current_node = head_of_list
-#     previous_node = None
-#     next_node = None
-#
-#     # Until we have 'fallen off' the end of the list
-#     while current_node:
-#         # Copy a pointer to the next element
-#         # before we overwrite current_node.next
-#         next_node = current_node.next
-#
-#         # Reverse the 'next' pointer
-#         current_node.next = previous_node
-#
-#         # Step forward in the list
-#         previous_node = current_node
-#         current_node = next_node
-#
-#     return previous_node
+
+
+class LinkedListNode():
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+def reverse(head_of_list):
+    current_node = head_of_list
+    previous_node = None
+    next_node = None
+
+    # Until we have 'fallen off' the end of the list
+    while current_node:
+        # Copy a pointer to the next element
+        # before we overwrite current_node.next
+        next_node = current_node.next
+
+        # Reverse the 'next' pointer
+        current_node.next = previous_node
+
+        # Step forward in the list
+        previous_node = current_node
+        current_node = next_node
+
+    return previous_node
 
 
 # Singly-linked lists are already defined with this interface:
-# class ListNode(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.next = None
-# [1, 3, 4, 6]
+class ListNode(object):
+    def __init__(self, x):
+        self.value = x
+        self.next = None
+
+
+[1, 3, 4, 6]
 
 """
 Note: Your solution should have O(n) time complexity, where n is the number of elements in l, since this is what you will be asked to accomplish in an interview.
@@ -372,41 +380,37 @@ For l1 = [1, 1, 2, 4] and l2 = [0, 3, 5], the output should be
 mergeTwoLinkedLists(l1, l2) = [0, 1, 1, 2, 3, 4, 5].
 """
 
+
 # Singly-linked lists are already defined with this interface:
-# class ListNode(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.next = None
-# NOT WORKING
-# Singly-linked lists are already defined with this interface:
-# class ListNode(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.next = None
-#
-# def mergeTwoLinkedLists(l1, l2):
-#     # create empty node to hold the new merged list
-#     merged_node = ListNode(0)
-#     # end will hold the end node
-#     end = merged_node
-#     while True:
-#         # if either list becomes empty join lists
-#         if l1 is None:
-#             end.next = l2
-#             break
-#         if l2 is None:
-#             end.next = l1
-#             break
-#         # merge the smaller list to the end of the larger and create a head from the merged list
-#         if l1.value <= l2.value:
-#             end.next = l1
-#             l1 = l1.next
-#         else:
-#             end.next = l2
-#             l2 = l2.next
-#         # iterate the end node
-#         end = end.next
-#     return merged_node.next
+class ListNode(object):
+    def __init__(self, x):
+        self.value = x
+        self.next = None
+
+
+def mergeTwoLinkedLists(l1, l2):
+    # create empty node to hold the new merged list
+    merged_node = ListNode(0)
+    # end will hold the end node
+    end = merged_node
+    while True:
+        # if either list becomes empty join lists
+        if l1 is None:
+            end.next = l2
+            break
+        if l2 is None:
+            end.next = l1
+            break
+        # merge the smaller list to the end of the larger and create a head from the merged list
+        if l1.value <= l2.value:
+            end.next = l1
+            l1 = l1.next
+        else:
+            end.next = l2
+            l2 = l2.next
+        # iterate the end node
+        end = end.next
+    return merged_node.next
 
 
 """
@@ -427,170 +431,170 @@ reverseNodesInKGroups(l, k) = [3, 2, 1, 6, 5, 4, 9, 8, 7, 10, 11].
 """
 
 # Singly-linked lists are already defined with this interface:
-# class ListNode(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.next = None
-#
-# def reverseNodesInKGroups(l, k):
-#     # create an empty node to hold the new list
-#     new_node = ListNode(0)
-#     # set the next value to the list
-#     new_node.next = l
-#     # set the previous node to the new list
-#     prev = new_node
-#
-#     while True:
-#         # set the start to the new node next
-#         start = prev.next
-#         # set the end to the prev
-#         end = prev
-#         # iterate k times
-#         for i in range(0, k):
-#             # set end to the value its pointing to
-#             end = end.next
-#             # if the last node
-#             if end == None:
-#                 # return
-#                 return new_node.next
-#         # set the new reverset list at the end of the last reversed list
-#         new_reversed = end.next
-#         # call the reverse_list function passing in the start and end
-#         reverse_list(start, end)
-#         # set pointer of prev to end
-#         prev.next = end
-#         # set pointer of start to the new list
-#         start.next = new_reversed
-#         # set prev value to the start value
-#         prev = start
-#
-#
+class ListNode(object):
+  def __init__(self, x):
+    self.value = x
+    self.next = None
+
+def reverseNodesInKGroups(l, k):
+    # create an empty node to hold the new list
+    new_node = ListNode(0)
+    # set the next value to the list
+    new_node.next = l
+    # set the previous node to the new list
+    prev = new_node
+
+    while True:
+        # set the start to the new node next
+        start = prev.next
+        # set the end to the prev
+        end = prev
+        # iterate k times
+        for i in range(0, k):
+            # set end to the value its pointing to
+            end = end.next
+            # if the last node
+            if end == None:
+                # return
+                return new_node.next
+        # set the new reverset list at the end of the last reversed list
+        new_reversed = end.next
+        # call the reverse_list function passing in the start and end
+        reverse_list(start, end)
+        # set pointer of prev to end
+        prev.next = end
+        # set pointer of start to the new list
+        start.next = new_reversed
+        # set prev value to the start value
+        prev = start
+
+
 # # function to reverse the list
-# def reverse_list(start, end):
-#     # set the last reversed group to the new start
-#     old_reversed = start
-#     # set the new current to the start
-#     current = start
-#     # set next node to the node start is pointing to
-#     next_node = start.next
-#     # while the current node is not the last node
-#     while current != end:
-#         # iterate
-#         current = next_node
-#         next_node = next_node.next
-#         # set the current pointer to the last reversed
-#         current.next = old_reversed
-#         # set the last reversed to the current
-#         old_reversed = current
-#
+def reverse_list(start, end):
+    # set the last reversed group to the new start
+    old_reversed = start
+    # set the new current to the start
+    current = start
+    # set next node to the node start is pointing to
+    next_node = start.next
+    # while the current node is not the last node
+    while current != end:
+        # iterate
+        current = next_node
+        next_node = next_node.next
+        # set the current pointer to the last reversed
+        current.next = old_reversed
+        # set the last reversed to the current
+        old_reversed = current
+
 
 
 """
 Refactor the Queue class below by adding an `is_empty` method. After writing this method, refactor your other methods to use this method in your other methods.
 """
 
-#
-# class LinkedListNode:
-#     def __init__(self, data):
-#         self.data = data
-#         self.next = None
-#
-#
-# class Queue:
-#     def __init__(self):
-#         self.front = None
-#         self.rear = None
-#
-#     def enqueue(self, item):
-#         new_node = LinkedListNode(item)
-#         # check if queue is empty
-#         if self.is_empty():
-#             self.front = new_node
-#             self.rear = new_node
-#         else:
-#             # add new node to rear
-#             self.rear.next = new_node
-#             # reassign rear to new node
-#             self.rear = new_node
-#
-#     def dequeue(self):
-#         # check if queue is empty
-#         if not self.is_empty():
-#             # keep copy of old front
-#             old_front = self.front
-#             # set new front
-#             self.front = old_front.next
-#
-#         # check if the queue is now empty
-#         if self.is_empty():
-#             # make sure rear is also None
-#             self.rear = None
-#
-#         return old_front
-#
-#     # my code to check if the queue is empty
-#     def is_empty(self):
-#         return self.front is None and self.rear is None
+
+class LinkedListNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class Queue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+
+    def enqueue(self, item):
+        new_node = LinkedListNode(item)
+        # check if queue is empty
+        if self.is_empty():
+            self.front = new_node
+            self.rear = new_node
+        else:
+            # add new node to rear
+            self.rear.next = new_node
+            # reassign rear to new node
+            self.rear = new_node
+
+    def dequeue(self):
+        # check if queue is empty
+        if not self.is_empty():
+            # keep copy of old front
+            old_front = self.front
+            # set new front
+            self.front = old_front.next
+
+        # check if the queue is now empty
+        if self.is_empty():
+            # make sure rear is also None
+            self.rear = None
+
+        return old_front
+
+    # my code to check if the queue is empty
+    def is_empty(self):
+        return self.front is None and self.rear is None
 
 
 """
 Add a peek method to the Stack class. The peek method should return the value of the top item in the stack without actually removing it from the stack.
 """
 
-#
-# class Stack:
-#     def __init__(self):
-#         self.data = []
-#
-#     def push(self, item):
-#         self.data.append(item)
-#
-#     # my code for peek method
-#     def peek(self, item):
-#         return self.data[-1]
-#
-#     def pop(self):
-#         if len(self.data) > 0:
-#             return self.data.pop()
-#         return "The stack is empty"
+
+class Stack:
+    def __init__(self):
+        self.data = []
+
+    def push(self, item):
+        self.data.append(item)
+
+    # my code for peek method
+    def peek(self, item):
+        return self.data[-1]
+
+    def pop(self):
+        if len(self.data) > 0:
+            return self.data.pop()
+        return "The stack is empty"
 
 
 """
 Add a peek method to the Stack class below. The peek method should return the value of the node that is at the top of the stack without actually removing it from the stack.
 """
 
-# class LinkedListNode:
-#     def __init__(self, data):
-#         self.data = data
-#         self.next = None
-#
-#
-# class Stack:
-#     def __init__(self):
-#         self.top = None
-#
-#     def push(self, data):
-#         # create new node with data
-#         new_node = LinkedListNode(data)
-#         # set current top to new node's next
-#         new_node.next = self.top
-#         # reset the top pointer to the new node
-#         self.top = new_node
-#
-#     def pop(self):
-#         # make sure stack is not empty
-#         if self.top is not None:
-#             # store popped node
-#             popped_node = self.top
-#             # reset top pointer to next node
-#             self.top = popped_node.next
-#             # return the value from the popped node
-#             return popped_node.data
-#
-#     # my code for peek method
-#     def peek(self):
-#         if self.top is not None:
-#             return self.top
+class LinkedListNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class Stack:
+    def __init__(self):
+        self.top = None
+
+    def push(self, data):
+        # create new node with data
+        new_node = LinkedListNode(data)
+        # set current top to new node's next
+        new_node.next = self.top
+        # reset the top pointer to the new node
+        self.top = new_node
+
+    def pop(self):
+        # make sure stack is not empty
+        if self.top is not None:
+            # store popped node
+            popped_node = self.top
+            # reset top pointer to next node
+            self.top = popped_node.next
+            # return the value from the popped node
+            return popped_node.data
+
+    # my code for peek method
+    def peek(self):
+        if self.top is not None:
+            return self.top
 
 
 """
@@ -634,32 +638,32 @@ class Stack(object):
         return self.items[-1]
 
 
-# class MaxStack(object):
-#     def __init__(self):
-#     # Your code here
-#         self.head = []
-#         self.max_value = None
-#
-#     def push(self, item):
-#         """Add a new item onto the top of our stack."""
-#         # Your code here
-#         self.head.append(item)
-#         self.max_value = max(max(self.head), item)
-#
-#     def pop(self):
-#         """Remove and return the top item from our stack."""
-#         # Your code here
-#         if not self.head:
-#             return None
-#
-#         self.head.pop()
-#         self.max_value = max(self.head)
-#
-#     def get_max(self):
-#         """The last item in maxes_stack is the max item in our stack."""
-#         # Your code here
-#         return self.max_value
-#
+class MaxStack(object):
+    def __init__(self):
+    # Your code here
+        self.head = []
+        self.max_value = None
+
+    def push(self, item):
+        """Add a new item onto the top of our stack."""
+        # Your code here
+        self.head.append(item)
+        self.max_value = max(max(self.head), item)
+
+    def pop(self):
+        """Remove and return the top item from our stack."""
+        # Your code here
+        if not self.head:
+            return None
+
+        self.head.pop()
+        self.max_value = max(self.head)
+
+    def get_max(self):
+        """The last item in maxes_stack is the max item in our stack."""
+        # Your code here
+        return self.max_value
+
 # max_stack = MaxStack()
 # max_stack.push(1)
 # max_stack.push(2)
@@ -743,47 +747,47 @@ correctly. For example, "{ [ ( ] ) }" should return False, even though each
 opener can be matched to a closer.*
 """
 
-# code = "{ [ ] ( ) }"
+code = "{ [ ] ( ) }"
 
-# code = "{ [ ( ] ) }"
+code = "{ [ ( ] ) }"
 
-#
-# code = "{ [ }"
-#
-#
-# def is_valid(code):
-#     check = []
-#     if code == '':
-#         return True
-#     if code[0] == ')' or code[0] == '}' or code[0] == ']':
-#         return False
-#
-#     for paren in code:
-#         if paren == ' ':
-#             continue
-#         if paren == '(' or paren == '{' or paren == '[':
-#             print('paren:', paren)
-#             check.append(paren)
-#             print('append:', check)
-#         elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
-#                 == '{' or paren == ']' and check[-1] == '[':
-#
-#                 if len(check) == 0:
-#                     print('len:', len(check))
-#                     return False
-#                 else:
-#                     print('pop:', paren)
-#                     check.pop()
-#         else:
-#             print('else check:', paren, check)
-#             return False
-#
-#     if check:
-#         print('check:', check)
-#         return False
-#     return True
-#
-#
+
+code = "{ [ }"
+
+
+def is_valid(code):
+    check = []
+    if code == '':
+        return True
+    if code[0] == ')' or code[0] == '}' or code[0] == ']':
+        return False
+
+    for paren in code:
+        if paren == ' ':
+            continue
+        if paren == '(' or paren == '{' or paren == '[':
+            print('paren:', paren)
+            check.append(paren)
+            print('append:', check)
+        elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
+                == '{' or paren == ']' and check[-1] == '[':
+
+                if len(check) == 0:
+                    print('len:', len(check))
+                    return False
+                else:
+                    print('pop:', paren)
+                    check.pop()
+        else:
+            print('else check:', paren, check)
+            return False
+
+    if check:
+        print('check:', check)
+        return False
+    return True
+
+
 # print(is_valid(code))
 
 """
@@ -800,53 +804,53 @@ queueOnStacks(requests) = [1, 2].
 After the first request, the queue is {1}; after the second it is {1, 2}. Then we do the third request, "pop", and add the first element of the queue 1 to the answer array. The queue becomes {2}. After the fourth request, the queue is {2, 3}. Then we perform "pop" again and add 2 to the answer array, and the queue becomes {3}.
 """
 
-# requests = ["push 1", "push 2", "pop", "push 3", "pop"]
-#
-# class Stack:
-#     def __init__(self):
-#         self.items = []
-#
-#     def isEmpty(self):
-#         return self.items == []
-#
-#     def push(self, item):
-#         self.items.append(item)
-#
-#     def pop(self):
-#         return self.items.pop()
-#
-#
-# def queueOnStacks(requests):
-#     left = Stack()
-#     right = Stack()
-#
-#     def insert(x):
-#         left.push(x)
-#         print('queue:', left.items)
-#
-#
-#     def remove():
-#         if len(right.items) == 0:
-#             while len(left.items) > 0:
-#                 shifted = left.pop()
-#                 right.push(shifted)
-#         return right.items.pop()
-#
-#
-#
-#
-#     ans = []
-#     for request in requests:
-#         req = request.split(" ")
-#         if req[0] == 'push':
-#             insert(int(req[1]))
-#         else:
-#             ans.append(remove())
-#             print('add to ans:', ans)
-#
-#     return ans
-#
-#
+requests = ["push 1", "push 2", "pop", "push 3", "pop"]
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+
+def queueOnStacks(requests):
+    left = Stack()
+    right = Stack()
+
+    def insert(x):
+        left.push(x)
+        print('queue:', left.items)
+
+
+    def remove():
+        if len(right.items) == 0:
+            while len(left.items) > 0:
+                shifted = left.pop()
+                right.push(shifted)
+        return right.items.pop()
+
+
+
+
+    ans = []
+    for request in requests:
+        req = request.split(" ")
+        if req[0] == 'push':
+            insert(int(req[1]))
+        else:
+            ans.append(remove())
+            print('add to ans:', ans)
+
+    return ans
+
+
 # print(queueOnStacks(requests))
 
 """
@@ -867,16 +871,15 @@ For sequence = "{[]}", the output should be validBracketSequence(sequence) = tru
 """
 sequence = "()"
 
-# def validBracketSequence(sequence):
-#     pairs = dict(zip('(,[,{', '),],}'))
-#     stack = []
-#     for item in sequence:
-#         if item in pairs:
-#             stack.append(pairs[item])
-#         elif not (stack and item == stack.pop()):
-#             return False
-#     return not stack
+def validBracketSequence(sequence):
+    pairs = dict(zip('(,[,{', '),],}'))
+    stack = []
+    for item in sequence:
+        if item in pairs:
+            stack.append(pairs[item])
+        elif not (stack and item == stack.pop()):
+            return False
+    return not stack
 
 
-
-print(validBracketSequence(sequence))
+# print(validBracketSequence(sequence))

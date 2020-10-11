@@ -166,6 +166,8 @@ import random
 """
 Classify the runtime complexity of the number_of_steps function below using Big O notation.
 """
+
+
 # def number_of_steps(num):
 #     # overall: O(log n)
 #     # O(1) + O(log n * c) --> O(c log n + 1) --> O(log n)
@@ -239,12 +241,12 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # """
 #
 #
-# def fibonacci(n):
-#     lst = [0, 1]
-#     for i in range(2, n):
-#         lst.append(lst[i - 2] + lst[i - 1])
-#
-#     return lst[n - 1]
+def fibonacci(n):
+    lst = [0, 1]
+    for i in range(2, n):
+        lst.append(lst[i - 2] + lst[i - 1])
+
+    return lst[n - 1]
 # # O(n)
 #
 # """
@@ -252,19 +254,19 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # """
 #
 #
-# def fibonacci_two(n):
-#     x, y, z = 0, 1, None
-#
-#     if n == 0:
-#         return x
-#     if n == 1:
-#         return y
-#
-#     for i in range(2, n):
-#         z = x + y
-#         x, y = y, z
-#
-#     return z
+def fibonacci_two(n):
+    x, y, z = 0, 1, None
+
+    if n == 0:
+        return x
+    if n == 1:
+        return y
+
+    for i in range(2, n):
+        z = x + y
+        x, y = y, z
+
+    return z
 # # O(1)
 #
 # """
@@ -272,38 +274,44 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # """
 #
 #
-# def do_something(n):
-#     lst = []
-#     for i in range(n):
-#         for j in range(n):
-#             lst.append(i + j)
+def do_something(n):
+    lst = []
+    for i in range(n):
+        for j in range(n):
+            lst.append(i + j)
+
+    return lst
+
+
+# O(n^2)
+
+
+# numbers = [2, 0, 0, 0]
 #
-#     return lst
-# # O(n^2)
 #
-#
-# # numbers = [2, 0, 0, 0]
-# #
-# #
-# def removeEvens(numbers):
-#     return [num for num in numbers if num % 2 != 0]
+def removeEvens(numbers):
+    return [num for num in numbers if num % 2 != 0]
+
+
 # below code didn't pass tests above did
 # for num in numbers:
 #     if num % 2 == 0 and num != 0:
 #         numbers.remove(num)
 # return numbers
-# #
-# #
-# # print(removeEvens(numbers))
-# #
-# # import statistics
-# #
-# # sequence = [-1, 3, -2, 2]
-# #
-# # def arrayMedian(sequence):
-# #     return statistics.median(sequence)
-# #
-# # print(arrayMedian(sequence))
+
+
+# print(removeEvens(numbers))
+
+import statistics
+
+sequence = [-1, 3, -2, 2]
+
+
+def arrayMedian(sequence):
+    return statistics.median(sequence)
+
+
+# print(arrayMedian(sequence))
 #
 # s = "TuVwXYZ"
 #
@@ -324,36 +332,36 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # #     i += 1
 # #     return subs
 #
-# # s = "TuVwXYZ"
-#
-# # s = "ABCDEFFDEfghCBA"
-# s = "f"
-#
-#
-# def increasingSubstrings(s):
-#     string = ''
-#     subs = []
-#     i = 0
-#     if len(s) == 1:
-#         subs.append(s[0])
-#     else:
-#         for i in range(len(s) - 1):
-#             # print(s[i])
-#             if not string.startswith(s[i]):
-#                 string = string + s[i]
-#             if ord(s[i]) != ord(s[i + 1]) - 1:
-#                 # print(ord(s[i]))
-#                 subs.append(string)
-#                 string = s[i + 1]
-#                 continue
-#         # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
-#         if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
-#             string = string + s[len(s) - 1]
-#         subs.append(string)
-#         string = ''
-#     return subs
-#
-#
+# s = "TuVwXYZ"
+
+# s = "ABCDEFFDEfghCBA"
+s = "f"
+
+
+def increasingSubstrings(s):
+    string = ''
+    subs = []
+    i = 0
+    if len(s) == 1:
+        subs.append(s[0])
+    else:
+        for i in range(len(s) - 1):
+            # print(s[i])
+            if not string.startswith(s[i]):
+                string = string + s[i]
+            if ord(s[i]) != ord(s[i + 1]) - 1:
+                # print(ord(s[i]))
+                subs.append(string)
+                string = s[i + 1]
+                continue
+        # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
+        if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
+            string = string + s[len(s) - 1]
+        subs.append(string)
+        string = ''
+    return subs
+
+
 # print(increasingSubstrings(s))
 #
 #
@@ -380,52 +388,58 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # print(8 * 24)
 # print(8*5)
 
-#
-# param1 = 456
-# param2 = 1734
-#
-# def additionWithoutCarrying(param1, param2):
-#     # set variable to hold the added row answers
-#     result = []
-#     # function to find a digit in a number
-#     def find_digit(number, place):
-#         return number // 10**place % 10
-#     # get larger number
-#     larger = None
-#     if param1 > param2:
-#         larger = param1
-#     else:
-#         larger = param2#
-#     # using the index of the larger do the addition
-#     count = 0
-#     for i in range(len(str(larger))):
-#         num1 = find_digit(param1, count)
-#
-#         num2 = find_digit(param2, count)
-#         added_digits = num1 + num2
-#         count += 1
-#         result.append(added_digits % 10)
-#     result.reverse()
-#     number_string = map(str, result)
-#     number_string = ''.join(number_string)
-#     result = int(number_string)
-#     return result
-#
+
+param1 = 456
+param2 = 1734
+
+
+def additionWithoutCarrying(param1, param2):
+    # set variable to hold the added row answers
+    result = []
+
+    # function to find a digit in a number
+    def find_digit(number, place):
+        return number // 10 ** place % 10
+
+    # get larger number
+    larger = None
+    if param1 > param2:
+        larger = param1
+    else:
+        larger = param2  #
+    # using the index of the larger do the addition
+    count = 0
+    for i in range(len(str(larger))):
+        num1 = find_digit(param1, count)
+
+        num2 = find_digit(param2, count)
+        added_digits = num1 + num2
+        count += 1
+        result.append(added_digits % 10)
+    result.reverse()
+    number_string = map(str, result)
+    number_string = ''.join(number_string)
+    result = int(number_string)
+    return result
+
+
 # print(additionWithoutCarrying(param1, param2))
 #
 # Given an array of positive integers a, your task is to calculate how many of its elements have an even number of digits.#
 # Example
 # For a = [12, 134, 111, 1111, 10], the output should be evenDigitsNumber(a) = 3.
-#
-# a = [12, 134, 111, 1111, 10]
-#
-# def evenDigitsNumber(a):
-#     even_count = 0
-#     for group in a:
-#         if len(str(group)) % 2 == 0:
-#             even_count += 1
-#     return even_count
-#
+
+a = [12, 134, 111, 1111, 10]
+
+
+def evenDigitsNumber(a):
+    even_count = 0
+    for group in a:
+        if len(str(group)) % 2 == 0:
+            even_count += 1
+    return even_count
+
+
 # print(evenDigitsNumber(a))
 
 # You're writing a new programming language and you'd like it to have the capability of splitting a string into substrings with limited characters. More specifically, we'll call a substring good if the absolute difference in ASCII codes between any two of its characters is less than or equal to k.
@@ -449,66 +463,70 @@ Classify the runtime complexity of the number_of_steps function below using Big 
 # For strToSplit = "aaabzaaabb" and k = 10, the output should be goodSubstrings(strToSplit, k) = 3.
 #
 # strToSplit could be split into ["aaab", "z", "aaabb"]. Since the z character has such a large difference with each of its adjacent characters, it must be in a substring of its own.
-# def increasingSubstrings(s):
-#     string = ''
-#     subs = []
-#     i = 0
-#     if len(s) == 1:
-#         subs.append(s[0])
-#     else:
-#         for i in range(len(s) - 1):
-#             # print(s[i])
-#             if not string.startswith(s[i]):
-#                 string = string + s[i]
-#             if ord(s[i]) != ord(s[i + 1]) - 1:
-#                 # print(ord(s[i]))
-#                 subs.append(string)
-#                 string = s[i + 1]
-#                 continue
-#         # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
-#         if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
-#             string = string + s[len(s) - 1]
-#         subs.append(string)
-#         string = ''
-#     return subs
 
 
-# strToSplit = "aaabaaabb"
-# k = 0
-# strToSplit = "aaabaaabb"
-# k = 1
-# strToSplit = "aaabzaaabb"
-# k = 5
-# def goodSubstrings(strToSplit, k):
-#     smallest = ord(strToSplit[0])
-#     largest = 0
-#     subs = []
-#     s = ''
-#     for i in range(len(strToSplit)):
-#         # print('Letter', strToSplit[i],
-#         #       ord(strToSplit[i]))
-#         # print(f'smallest: {smallest} largest: {largest}')
-#         if ord(strToSplit[i]) < smallest:
-#             smallest = ord(strToSplit[i])
-#         if ord(strToSplit[i]) > largest:
-#             largest = ord(strToSplit[i])
-#
-#         if largest - smallest <= k:
-#             s = s + strToSplit[i]
-#         else:
-#             # print(strToSplit[i])
-#             subs.append(s)
-#             s = strToSplit[i]
-#             smallest = ord(strToSplit[i])
-#             largest = ord(strToSplit[i])
-#             # print(f'smallest at bottom: {smallest}')
-#     if len(s) > 0:
-#         subs.append(s)
-#     # print(s)
-#     # print(subs)
-#     return len(subs)
-#
-#
+def increasingSubstrings(s):
+    string = ''
+    subs = []
+    i = 0
+    if len(s) == 1:
+        subs.append(s[0])
+    else:
+        for i in range(len(s) - 1):
+            # print(s[i])
+            if not string.startswith(s[i]):
+                string = string + s[i]
+            if ord(s[i]) != ord(s[i + 1]) - 1:
+                # print(ord(s[i]))
+                subs.append(string)
+                string = s[i + 1]
+                continue
+        # print(f'-1: {ord(s[len(s) - 1])}, -2: {ord(s[len(s) - 2])}')
+        if ord(s[len(s) - 1]) == ord(s[len(s) - 2]) + 1:
+            string = string + s[len(s) - 1]
+        subs.append(string)
+        string = ''
+    return subs
+
+
+strToSplit = "aaabaaabb"
+k = 0
+strToSplit = "aaabaaabb"
+k = 1
+strToSplit = "aaabzaaabb"
+k = 5
+
+
+def goodSubstrings(strToSplit, k):
+    smallest = ord(strToSplit[0])
+    largest = 0
+    subs = []
+    s = ''
+    for i in range(len(strToSplit)):
+        # print('Letter', strToSplit[i],
+        #       ord(strToSplit[i]))
+        # print(f'smallest: {smallest} largest: {largest}')
+        if ord(strToSplit[i]) < smallest:
+            smallest = ord(strToSplit[i])
+        if ord(strToSplit[i]) > largest:
+            largest = ord(strToSplit[i])
+
+        if largest - smallest <= k:
+            s = s + strToSplit[i]
+        else:
+            # print(strToSplit[i])
+            subs.append(s)
+            s = strToSplit[i]
+            smallest = ord(strToSplit[i])
+            largest = ord(strToSplit[i])
+            # print(f'smallest at bottom: {smallest}')
+    if len(s) > 0:
+        subs.append(s)
+    # print(s)
+    # print(subs)
+    return len(subs)
+
+
 # print(goodSubstrings(strToSplit, k))
 
 """
@@ -955,6 +973,7 @@ For s = "abccaaab", the output should be
 removeAdjacent(s) = "abcab".
 """
 
+
 # s = "aaaaa"
 # s = "abccaaab"
 
@@ -971,6 +990,7 @@ def removeAdjacent(s):
         else:
             new_str += letter
     return new_str
+
 
 # print(removeAdjacent(s))
 
@@ -989,6 +1009,7 @@ Hint: you should try using a "two-pointers approach".
 """
 
 str = 'reverse'
+
 
 def reverse_String(str):
     i, j = 0, len(str) - 1
@@ -1019,6 +1040,7 @@ inputString = "aabaa"
 # inputString = "abac"
 # inputString = "a"
 inputString = "hlbeeykoqqqqokyeeblh"
+
 
 def checkPalindrome(inputString):
     return inputString == inputString[::-1]

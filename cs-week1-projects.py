@@ -203,6 +203,9 @@ s = 'abacaba'
 #             if s[0] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
 #                 count += 1
 #     print(count)
+
+
+
 def threeCharsDistinct(s):
     count = 0
     for i in range(len(s)):
@@ -213,97 +216,110 @@ def threeCharsDistinct(s):
     return count
 
 
-print(threeCharsDistinct(s))
+# print(threeCharsDistinct(s))
 
-#     sentence = "Man bites dog"
-#     def reverseSentence(sentence):
-#         words_array = sentence.split(' ')
-#         words_reversed = ' '.join(reversed(words_array))
-#         return words_reversed
+sentence = "Man bites dog"
+
+
+def reverseSentence(sentence):
+    words_array = sentence.split(' ')
+    words_reversed = ' '.join(reversed(words_array))
+    return words_reversed
+
+
 # print(reverseSentence(sentence))
-#
-# passcode = '1111'
-# attempts = ["1111",
-#  "4444",
-#  "9999",
-#  "3333",
-#  "8888",
-#  "2222",
-#  "7777",
-#  "0000",
-#  "6666",
-#  "7285",
-#  "5555",
-#  "1111"]
-#
-#
-# def incorrectPasscodeAttempts(passcode, attempts):
-#     count = 0
-#     indexes = []
-#     if len(attempts) < 10 and passcode not in attempts:
-#         return False
-#     for attempt in attempts:
-#         print('attempt:', attempt)
-#         if attempt != passcode:
-#             print('count before:', count)
-#             count += 1
-#             print('count after:', count)
-#         if attempt == passcode:
-#             count = 0
-#         if count >= 10:
-#             return True
-#     if passcode in attempts:
-#                 return False
+
+passcode = '1111'
+attempts = ["1111",
+            "4444",
+            "9999",
+            "3333",
+            "8888",
+            "2222",
+            "7777",
+            "0000",
+            "6666",
+            "7285",
+            "5555",
+            "1111"]
+
+
+def incorrectPasscodeAttempts(passcode, attempts):
+    count = 0
+    indexes = []
+    if len(attempts) < 10 and passcode not in attempts:
+        return False
+    for attempt in attempts:
+        print('attempt:', attempt)
+        if attempt != passcode:
+            print('count before:', count)
+            count += 1
+            print('count after:', count)
+        if attempt == passcode:
+            count = 0
+        if count >= 10:
+            return True
+    if passcode in attempts:
+        return False
+
+
 # print(incorrectPasscodeAttempts(passcode, attempts))
 
-# n = 412
-#
-# def digitSumsDifference(n):
-#     evens_sum = 0
-#     odds_sum = 0
-#     difference = 0
-#     evens = []
-#     odds = []
-#     for num in str(n):
-#         if int(num) % 2 == 0:
-#             evens.append(int(num))
-#         else:
-#             odds.append(int(num))
-#     for even in evens:
-#         evens_sum = evens_sum + even
-#     for odd in odds:
-#         odds_sum = odds_sum + odd
-#     difference = evens_sum - odds_sum
-#     return difference
-#
+n = 412
+
+
+def digitSumsDifference(n):
+    evens_sum = 0
+    odds_sum = 0
+    difference = 0
+    evens = []
+    odds = []
+    for num in str(n):
+        if int(num) % 2 == 0:
+            evens.append(int(num))
+        else:
+            odds.append(int(num))
+    for even in evens:
+        evens_sum = evens_sum + even
+    for odd in odds:
+        odds_sum = odds_sum + odd
+    difference = evens_sum - odds_sum
+    return difference
+
+
 # print(digitSumsDifference(n))
-# import math
-# n = 123456
-#
-#
-# def digitsManipulations(n):
-#     nums = []
-#     for num in str(n):
-#         nums.append(int(num))
-#     return math.prod(nums) - sum(nums)
+
+
+import math
+
+n = 123456
+
+
+def digitsManipulations(n):
+    nums = []
+    for num in str(n):
+        nums.append(int(num))
+    return math.prod(nums) - sum(nums)
+
+
 #
 # print(digitsManipulations(n))
-#
-# s = "abcde"
-#
-#
-# def countVowelConsonant(s):
-#     vowel_count = 0
-#     const_count = 0
-#     vowels = ['a', 'e', 'i', 'o', 'u']
-#     for letter in s:
-#         if letter in vowels:
-#             vowel_count += 1
-#         else:
-#             const_count += 2
-#     return vowel_count + const_count
-#
-#
+
+s = "abcde"
+
+
+def countVowelConsonant(s):
+    vowel_count = 0
+    const_count = 0
+    vowels = ['a', 'e', 'i', 'o', 'u']
+    for letter in s:
+        if letter in vowels:
+            vowel_count += 1
+        else:
+            const_count += 2
+    return vowel_count + const_count
+
+
 # print(countVowelConsonant(s))
 #
 # numbers = ["64630488",
@@ -344,12 +360,12 @@ print(threeCharsDistinct(s))
 def contains_duplicate_2(nums):
     # overall runtime: O(nlogn + n) --> O(n log n)
     # space complexity: O(1)
-    nums.sort()    # sorting is usually O(n log n)
-                   # nums.sort() sorts it in place
+    nums.sort()  # sorting is usually O(n log n)
+    # nums.sort() sorts it in place
     # everything below this line is O(n)
-    i = 0          # O(1)
-    while i < len(nums) - 1:      # up to O(n)
-        if nums[i] == nums[i+1]:  # O(1)
+    i = 0  # O(1)
+    while i < len(nums) - 1:  # up to O(n)
+        if nums[i] == nums[i + 1]:  # O(1)
             return True
         i += 1
     return False
