@@ -451,3 +451,35 @@ def product_of_all_other_numbers(lst, cache, length):
 
 # print(product_of_all_other_numbers([1, 7, 3, 4], [], len([1, 7, 3, 4])))
 
+"""
+*** Sliding Window Max ***
+--------------------------
+Given an array of integers, there is a sliding window of size k which is moving from the left side of the array to the right, one element at a time. You can only interact with the k numbers in the window. Return an array consisting of the maximum value of each window of elements.
+
+Example
+Sample Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Expected Output: [3,3,5,5,6,7] 
+Explanation: 
+
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+Can you implement a solution that calculates all of the maximum sliding window values in O(n) time?
+"""
+
+def sliding_window_max(lst, k):
+    count = 0
+    result = []
+    for _ in range(count, len(lst) - 2):
+        window = [lst[count], lst[count+1], lst[count+2]]
+        print(window)
+        result.append(max(window))
+        count += 1
+    return result
+
+# print(sliding_window_max([1,3,-1,-3,5,3,6,7], 3))
