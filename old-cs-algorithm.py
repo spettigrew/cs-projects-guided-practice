@@ -343,8 +343,111 @@ def brute_force_anagrams():
 from pprint import pprint
 
 # print(sorted(words.keys()))
-pprint(brute_force_anagrams())
+# pprint(brute_force_anagrams())
+
+"""
+Flood fill ( fill an arbitrary shape with characters) ** (need to make a 
+shape to test)
+"""
+
+
+def floodfill(row, col, char, image):
+    if image[row][col] != ' ':
+        return
+
+    image[row][col] = char
+
+    floodfill(row, col + 1, char)
+    floodfill(row, col - 1, char)
+    floodfill(row + 1, col, char)
+    floodfill(row - 1, col, char)
+
 
 """
 Algorithms old cs project
 """
+"""
+*** Single Number ***
+---------------------
+Given a non-empty array of integers where every element appears twice except for one. Find that single number. You may assume that there will always be one odd-number-out and every other number in the input shows up exactly twice.
+    
+Examples
+Sample input: [2, 2, 1]
+Expected output: 1
+Sample input: [4, 1, 2, 1, 2]
+Expected output: 4
+Can you implement a solution that finds the single number in one pass through the input array with O(1) space complexity?
+"""
+
+
+def single_number(arr):
+    # check if the number selected is in arr[num:] or arr[:num]
+    # if so continue if not return number
+    for i in range(len(arr)):
+        if arr[i] not in arr[i + 1:] and arr[i] not in arr[:i]:
+            return arr[i]
+
+
+# print(single_number([4, 1, 2, 1, 2]))
+
+
+"""
+*** Moving Zeroes ***
+---------------------
+Write a function that takes an array of integers and moves each non-zero integer to the left side of the array, then returns the altered array. The order of the non-zero integers does not matter in the mutated array.
+
+Examples
+Sample input: [0, 3, 1, 0, -2]
+Expected output: 3
+Expected output array state: [3, 1, -2, 0, 0]
+Sample input: [4, 2, 1, 5]
+Expected output: 4
+Expected output array state: [4, 2, 1, 5]
+Can you do this in a single pass through the input array with O(1) space?
+"""
+
+
+def moving_zeroes(arr):
+    for i in range(len(arr)):
+        if arr[i] == 0:
+            arr.append(arr[i])
+            arr.remove(arr[i])
+    return arr
+
+
+# print(moving_zeroes([0, 3, 1, 0, -2]))
+
+"""
+*** Product of All Other Numbers ***
+------------------------------------
+Write a function that receives an array of integers and returns an array consisting of the product of all numbers in the array except the number at that index.
+
+For example, given
+
+[1, 7, 3, 4]
+your function should return
+
+[84, 12, 28, 21]
+by calculating
+
+[7*3*4, 1*3*4, 1*7*4, 1*7*3]
+In the above example, the final value at index 0 is the product of every number in the input array except the number at index 0.
+
+Can you do this in O(n) time with O(n) space without using division?
+"""
+
+
+def product_of_all_other_numbers(lst, cache, length):
+    if length == 0:
+        return 0
+    result = 1
+    to_multiply = lst[1:]
+    for num in to_multiply:
+        result = result * num
+    to_multiply.append(lst[0])
+    cache.append(result)
+    product_of_all_other_numbers(to_multiply, cache, length - 1)
+    return cache
+
+# print(product_of_all_other_numbers([1, 7, 3, 4], [], len([1, 7, 3, 4])))
+
