@@ -449,6 +449,7 @@ def product_of_all_other_numbers(lst, cache, length):
     product_of_all_other_numbers(to_multiply, cache, length - 1)
     return cache
 
+
 # print(product_of_all_other_numbers([1, 7, 3, 4], [], len([1, 7, 3, 4])))
 
 """
@@ -472,14 +473,46 @@ Window position                Max
 Can you implement a solution that calculates all of the maximum sliding window values in O(n) time?
 """
 
+
 def sliding_window_max(lst, k):
     count = 0
     result = []
     for _ in range(count, len(lst) - 2):
-        window = [lst[count], lst[count+1], lst[count+2]]
-        print(window)
+        window = [lst[count], lst[count + 1], lst[count + 2]]
         result.append(max(window))
         count += 1
     return result
 
+
 # print(sliding_window_max([1,3,-1,-3,5,3,6,7], 3))
+
+
+"""
+Rock Paper Scissors
+Write a function rock_paper_scissors to generate all of the possible plays that can be made in a game of "Rock Paper Scissors", given some input n, which represents the number of plays per round.
+
+For example, given n = 2, your function should output the following:
+
+[['rock', 'rock'], ['rock', 'paper'], ['rock', 'scissors'], ['paper', 'rock'], ['paper', 'paper'], ['paper', 'scissors'], ['scissors', 'rock'], ['scissors', 'paper'], ['scissors', 'scissors']]
+Your output should be a list of lists containing strings. Each inner list should have length equal to the input n.
+"""
+
+
+
+
+# TODO make this work, its not there yet
+
+game = ['rock', 'paper', 'scissors']
+def rock_paper_scissors(n):
+    combos = []
+    def get_combos(lst, combos):
+        for i in range(len(lst)):
+            for j in range(len(lst)):
+                next_combo = [lst[i], lst[j]]
+                if next_combo not in combos:
+                    combos.append(next_combo)
+        return combos
+    return get_combos(game, combos)
+
+
+print(rock_paper_scissors(2))
