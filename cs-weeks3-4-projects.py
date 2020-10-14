@@ -29,20 +29,34 @@ nums = [1, 7, 3, 6, 5, 6]
 
 # nums = [1,2,3]
 
+#  O(N^2) solution
+# def pivot_index(nums):
+#     # iterate array starting at index 1
+#     # get sum of items on left of i and compare to sum of items on right of i
+#     # if they are equal return i else keep going to the next i
+#     for i in range(len(nums)):
+#         left = sum(nums[:i])
+#         right = sum(nums[i + 1:])
+#         if left == right:
+#             return i
+#     return -1
 
+
+# O(N) solution
 def pivot_index(nums):
-    # iterate array starting at index 1
-    # get sum of items on left of i and compare to sum of items on right of i
-    # if they are equal return i else keep going to the next i
+    if len(nums) <= 1:
+        return -1
+    left = 0
+    right = sum(nums)
     for i in range(len(nums)):
-        left = sum(nums[:i])
-        right = sum(nums[i + 1:])
-        if left == right:
+        right -= nums[i]
+        if right == left:
             return i
-    return -1
+
+        left += nums[i]
 
 
-# print(pivot_index(nums))
+# print('def pivot_index:', pivot_index(nums))
 
 """
 You are given a non-empty array that represents the digits of a non-negative integer.
@@ -64,14 +78,35 @@ Explanation: The input array represents the integer 999. 999 + 1 = 1000.
 """
 
 
+# def plus_one(digits):
+# turn the numbers in the array into an integer
+# # The repr() function returns a printable representation of the given object.
+# number = (''.join(repr(int(n)) for n in digits))
+# result = []
+# for num in number:
+#     result.append(num)
+# print(int(number) + 1)
+
 def plus_one(digits):
-    # turn the numbers in the array into an integer
-    # The repr() function returns a printable representation of the given object.
-    numbers = (''.join(repr(int(n)) for n in digits))
-    print(int(numbers) + 1)
+    # check the last digit if its not 9 we just add 1
+    # if it is a 9 make it 0
+    # go left check 2nd to last if its not a 9 add 1
+    # if it is a 9
+
+    index = len(digits) - 1
+    while index >= 0 and digits[index] == 9:
+        digits[index] = 0
+        index -= 1
+
+    if index == -1:
+        digits.insert(0, 1)
+    else:
+        digits[index] += 1
+
+    return digits
 
 
-# print(plus_one([9,9,9]))
+print(plus_one([1, 1, 1]))
 
 """
 You are given the prices of a stock, in the form of an array of integers, prices. Let's say that prices[i] is the price of the stock on the ith day (0-based index). Assuming that you are allowed to buy and sell the stock only once, your task is to find the maximum possible profit (the difference between the buy and sell prices).
@@ -430,11 +465,13 @@ For l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] and k = 3, the output should be
 reverseNodesInKGroups(l, k) = [3, 2, 1, 6, 5, 4, 9, 8, 7, 10, 11].
 """
 
+
 # Singly-linked lists are already defined with this interface:
 class ListNode(object):
-  def __init__(self, x):
-    self.value = x
-    self.next = None
+    def __init__(self, x):
+        self.value = x
+        self.next = None
+
 
 def reverseNodesInKGroups(l, k):
     # create an empty node to hold the new list
@@ -486,7 +523,6 @@ def reverse_list(start, end):
         current.next = old_reversed
         # set the last reversed to the current
         old_reversed = current
-
 
 
 """
@@ -562,6 +598,7 @@ class Stack:
 """
 Add a peek method to the Stack class below. The peek method should return the value of the node that is at the top of the stack without actually removing it from the stack.
 """
+
 
 class LinkedListNode:
     def __init__(self, data):
@@ -640,7 +677,7 @@ class Stack(object):
 
 class MaxStack(object):
     def __init__(self):
-    # Your code here
+        # Your code here
         self.head = []
         self.max_value = None
 
@@ -663,6 +700,7 @@ class MaxStack(object):
         """The last item in maxes_stack is the max item in our stack."""
         # Your code here
         return self.max_value
+
 
 # max_stack = MaxStack()
 # max_stack.push(1)
@@ -751,7 +789,6 @@ code = "{ [ ] ( ) }"
 
 code = "{ [ ( ] ) }"
 
-
 code = "{ [ }"
 
 
@@ -772,12 +809,12 @@ def is_valid(code):
         elif paren == ')' and check[-1] == '(' or paren == '}' and check[-1] \
                 == '{' or paren == ']' and check[-1] == '[':
 
-                if len(check) == 0:
-                    print('len:', len(check))
-                    return False
-                else:
-                    print('pop:', paren)
-                    check.pop()
+            if len(check) == 0:
+                print('len:', len(check))
+                return False
+            else:
+                print('pop:', paren)
+                check.pop()
         else:
             print('else check:', paren, check)
             return False
@@ -806,6 +843,7 @@ After the first request, the queue is {1}; after the second it is {1, 2}. Then w
 
 requests = ["push 1", "push 2", "pop", "push 3", "pop"]
 
+
 class Stack:
     def __init__(self):
         self.items = []
@@ -828,16 +866,12 @@ def queueOnStacks(requests):
         left.push(x)
         print('queue:', left.items)
 
-
     def remove():
         if len(right.items) == 0:
             while len(left.items) > 0:
                 shifted = left.pop()
                 right.push(shifted)
         return right.items.pop()
-
-
-
 
     ans = []
     for request in requests:
@@ -871,6 +905,7 @@ For sequence = "{[]}", the output should be validBracketSequence(sequence) = tru
 """
 sequence = "()"
 
+
 def validBracketSequence(sequence):
     pairs = dict(zip('(,[,{', '),],}'))
     stack = []
@@ -880,6 +915,5 @@ def validBracketSequence(sequence):
         elif not (stack and item == stack.pop()):
             return False
     return not stack
-
 
 # print(validBracketSequence(sequence))
