@@ -106,7 +106,7 @@ def plus_one(digits):
     return digits
 
 
-print(plus_one([1, 1, 1]))
+# print(plus_one([1, 1, 1]))
 
 """
 You are given the prices of a stock, in the form of an array of integers, prices. Let's say that prices[i] is the price of the stock on the ith day (0-based index). Assuming that you are allowed to buy and sell the stock only once, your task is to find the maximum possible profit (the difference between the buy and sell prices).
@@ -275,29 +275,24 @@ class LinkedListNode():
         self.next = None
 
 
-# def delete_node(node_to_delete):
-#     head = x
-#     prev = None
-#     current = head
-#     while current is not None and current.value != node_to_delete.value:
-#         prev = current
-#         current = current.next
-#     if prev is None:
-#         head = current
-#     else:
-#         prev.next = current.next
+def delete_node(node_to_delete):
+    next = node_to_delete.next
+    next.next = None
+    node_to_delete.value = next.value
+    node_to_delete.next = next.next
 
 
-# x = LinkedListNode('X')
-# y = LinkedListNode('Y')
-# z = LinkedListNode('Z')
-#
-# x.next = y
-# y.next = z
-#
-#
-# print(delete_node(y))
-# print(x.next.value)
+
+x = LinkedListNode('X')
+y = LinkedListNode('Y')
+z = LinkedListNode('Z')
+
+x.next = y
+y.next = z
+
+
+print(delete_node(y))
+print(x.next.value)
 
 
 """
@@ -916,4 +911,164 @@ def validBracketSequence(sequence):
             return False
     return not stack
 
+
 # print(validBracketSequence(sequence))
+
+
+"""
+For a given positive integer n determine if it can be represented as a sum of two Fibonacci numbers (possibly equal).
+
+Example
+
+For n = 1, the output should be
+fibonacciSimpleSum2(n) = true.
+
+Explanation: 1 = 0 + 1 = F0 + F1.
+
+For n = 11, the output should be
+fibonacciSimpleSum2(n) = true.
+
+Explanation: 11 = 3 + 8 = F4 + F6.
+
+For n = 60, the output should be
+fibonacciSimpleSum2(n) = true.
+
+Explanation: 11 = 5 + 55 = F5 + F10.
+
+For n = 66, the output should be
+fibonacciSimpleSum2(n) = false
+"""
+
+
+def fibonacciSimpleSum2(n):
+    # first get fibonacci sequence up to n
+
+    if 0 < n < 5:
+        return True
+
+    seq = [0, 1]
+    for i in range(2, n):
+        fib = seq[i - 2] + seq[i - 1]
+        if n >= fib:
+            seq.append(fib)
+        else:
+            break
+    print(seq)
+
+    # The check I googled
+    # for i, number in enumerate(seq[:-1]):
+    #     paired = n - number
+    #     if paired in seq[i + 1:]:
+    #         return True
+
+    # check if any 2 of the numbers in seq add up to n
+    # My check
+    for i in range(len(seq) - 1):  # O(n^2)
+        j = 0
+
+        while (seq[i] + seq[j]) != n:
+            if j == len(seq) - 1:
+                break
+            else:
+                j += 1
+        if seq[i] + seq[j] == n:
+            return True
+
+    return False
+
+
+# print(fibonacciSimpleSum2(5))
+
+"""
+Given a sorted (in ascending order) integer array nums of n elements and a target value, write a function to search for target in nums. If target exists, then return its index, otherwise, return -1.
+
+Example 1:
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4
+
+Example 2:
+Input: nums = [-1,0,3,5,9,12], target = 2
+Output: -1
+Explanation: 2 does not exist in nums so return -1
+
+Note:
+
+All elements in nums are unique.
+The length of nums will be <= 100
+The value of each element in nums will be in the range [1, 10000]
+"""
+
+
+def csBinarySearch(nums, target):
+    min = 0
+    max = len(nums) - 1
+    while not max < min:
+        guess = (max + min) // 2
+
+        if nums[guess] == target:
+            return guess
+        elif nums[guess] < target:
+            min = guess + 1
+        else:
+            max = guess - 1
+
+    return -1
+
+
+# print(csBinarySearch([-1, 0, 3, 5, 9, 12], 9))
+
+
+"""
+Given an integer array nums sorted in ascending order, and an integer target.
+
+Suppose that nums is rotated at some pivot unknown to you beforehand (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+
+You should search for target in nums and if found return its index, otherwise return -1.
+
+Example 1:
+Input: nums = [6,7,0,1,2,3,4,5], target = 0
+Output: 2
+
+Example 2:
+Input: nums = [6,7,0,1,2,3,4,5], target = 3
+Output: 5
+
+Example 3:
+Input: nums = [1], target = 0
+Output: -1
+
+Note:
+
+1 <= nums.length < 100
+1 <= nums[i] <= 100
+All values of nums are unique.
+"""
+
+
+def csSearchRotatedSortedArray(nums, target):
+    min = 0
+    max = len(nums) - 1
+
+    while not max < min:
+        guess = (max + min) // 2
+
+        if nums[guess] == target:
+            return guess
+        elif nums[min] <= nums[guess]:
+            if nums[min] <= target < nums[guess]:
+                max = guess
+            else:
+                min = guess + 1
+        else:
+            if nums[max - 1] >= target > nums[guess]:
+                min = guess + 1
+            else:
+                max = guess
+
+    return -1
+
+
+# print(csSearchRotatedSortedArray([6, 7, 0, 1, 2, 3, 4, 5], 6))
+
+
