@@ -1,5 +1,5 @@
 """
-Week 5 warm up
+Week Binary search tree 5 warm up
 """
 """
 *** Objective 1 Challenge ***
@@ -206,5 +206,281 @@ def is_valid_BST(self, root):
     return True
 
 
+"""
+*** Codesignal Project ***
+--------------------------
+"""
+
+"""
+You are given a binary tree and you need to write a function that can determine if it is height-balanced.
+
+A height-balanced tree can be defined as a binary tree in which the left and right subtrees of every node differ in height by a maximum of 1.
+
+Example 1:
+Given the following tree [5,10,25,None,None,12,3]:
+
+    5
+   / \
+ 10  25
+    /  \
+   12   3
+return True.
+
+Example 2:
+Given the following tree [5,6,6,7,7,None,None,8,8]:
+
+       5
+      / \
+     6   6
+    / \
+   7   7
+  / \
+ 8   8
+return False.
+
+[execution time limit] 4 seconds (py3)
+
+[input] tree.integer root
+
+[output] boolean
+"""
 
 
+#
+# Binary trees are already defined with this interface:
+# class Tree(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.left = None
+#     self.right = None
+def balancedBinaryTree(root):
+    # define method to get the height of the tree
+    def get_height(root):
+        if root is None:
+            return 0
+        return max(get_height(root.left), get_height(root.right)) + 1
+
+    # if the root is None return True
+    if root is None:
+        return True
+    # get the heights of each subtree
+    left_height = get_height(root.left)
+    right_height = get_height(root.right)
+    # if the absolute value of left subtree - right subtree is less than or
+    # equal to 1 and left tree is balanced and right tree is balanced then
+    # the whole tree is balanced
+    if (abs(left_height - right_height) <= 1) and balancedBinaryTree(
+            root.left) is True and balancedBinaryTree(root.right) is True:
+        return True
+    return False
+
+"""
+You are given a binary tree and you are asked to write a function that finds its minimum depth. The minimum depth can be defined as the number of nodes along the shortest path from the root down to the nearest leaf node. As a reminder, a leaf node is a node with no children.
+
+Example:
+Given the binary tree [5,7,22,None,None,17,9],
+
+    5
+   / \
+  7  22
+    /  \
+   17   9
+your function should return its minimum depth = 2.
+
+[execution time limit] 4 seconds (py3)
+
+[input] tree.integer root
+
+[output] integer
+"""
+
+def minimumDepthBinaryTree(root):
+    # if root is None return 0
+    if root is None:
+        return 0
+    # if root has no children return 1
+    if root.left is None and root.right is None:
+        return 1
+
+    # if no left child traverse the right tree
+    if root.left is None:
+        return minimumDepthBinaryTree(root.right) + 1
+    # if not right child traverse the left sree
+    if root.right is None:
+        return minimumDepthBinaryTree(root.left) + 1
+
+    # return the minimum depth after recursion
+    return min(minimumDepthBinaryTree(root.left), minimumDepthBinaryTree(
+        root.right)) + 1
+
+""""
+week 5 Tree traversal Warm up
+"""
+
+"""
+Depth first inorder traversal 
+"""
+
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, val=0, left=None, right=None):
+         self.val = val
+         self.left = left
+         self.right = right
+
+def helper(root, res):
+    if root is None:
+        return
+    helper(root.left, res)
+    res.append(root.val)
+    helper(root.right, res)
+
+def inorder_traversal(root):
+    result = []
+    helper(root, result)
+    return result
+
+"""
+Depth first pre-order traversal
+"""
+
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, val=0, left=None, right=None):
+         self.val = val
+         self.left = left
+         self.right = right
+
+def helper(root, res):
+    if root is None:
+        return
+    res.append(root.val)
+    helper(root.left, res)
+    helper(root.right, res)
+
+def preorder_traversal(root):
+    result = []
+    helper(root, result)
+    return result
+
+"""
+Depth first  first post-order traversal
+"""
+
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, val=0, left=None, right=None):
+         self.val = val
+         self.left = left
+         self.right = right
+
+def helper(root, res):
+    if root is None:
+        return
+    helper(root.left, res)
+    helper(root.right, res)
+    res.append(root.val)
+
+def postorder_traversal(root):
+    result = []
+    helper(root, result)
+    return result
+
+"""
+Breadth first level order traversal
+"""
+
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, val=0, left=None, right=None):
+         self.val = val
+         self.left = left
+         self.right = right
+
+def breadth_first_traversal(root):
+    if root is None:
+        return []
+
+    result = []
+    queue = []
+    queue.append(root)
+
+    while len(queue) != 0:
+        node = queue.pop(0)
+        result.append(node.val)
+
+        if node.left is not None:
+            queue.append(node.left)
+
+        if node.right is not None:
+            queue.append(node.right)
+
+    return result
+
+
+"""
+*** Challenge ***
+-----------------
+What data structure could you use to write an iterative depth-first traversal method?
+-- a binary tree
+In your own words, explain how a depth-first traversal and a breadth-first traversal are different?
+-- depth first traversal uses recursion to visit the length of the tree and 
+returns the node of left subtree and then right subtree whereas breadth first traversal uses a queue to remember the visited nodes while checking a level at a time down the height of both subtrees together 
+"""
+
+
+"""
+*** Tree traversal Guided ***
+---------------------------------
+"""
+
+"""
+*** Demo 1 ***
+--------------
+You are given a binary tree.
+Write a function that can return the inorder traversal of node values.
+Example:
+Input:
+   3
+    \
+     1
+    /
+   5
+Output: [3,5,1]
+"""
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def inorder_traversal(root):
+    pass
+
+"""
+*** Demo 2 ***
+--------------
+You are given the values from a preorder and an inorder tree traversal. Write a
+function that can take those inputs and output a binary tree.
+*Note: assume that there will not be any duplicates in the tree.*
+Example:
+Inputs:
+preorder = [5,7,22,13,9]
+inorder = [7,5,13,22,9]
+Output:
+    5
+   / \
+  7  22
+    /  \
+   13   9
+"""
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def build_tree(preorder, inorder):
+    pass
