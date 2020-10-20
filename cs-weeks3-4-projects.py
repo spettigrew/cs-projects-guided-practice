@@ -282,7 +282,6 @@ def delete_node(node_to_delete):
     node_to_delete.next = next.next
 
 
-
 x = LinkedListNode('X')
 y = LinkedListNode('Y')
 z = LinkedListNode('Z')
@@ -290,9 +289,8 @@ z = LinkedListNode('Z')
 x.next = y
 y.next = z
 
-
-print(delete_node(y))
-print(x.next.value)
+# print(delete_node(y))
+# print(x.next.value)
 
 
 """
@@ -489,7 +487,7 @@ def reverseNodesInKGroups(l, k):
             if end == None:
                 # return
                 return new_node.next
-        # set the new reverset list at the end of the last reversed list
+        # set the new reverse list at the end of the last reversed list
         new_reversed = end.next
         # call the reverse_list function passing in the start and end
         reverse_list(start, end)
@@ -673,36 +671,43 @@ class Stack(object):
 class MaxStack(object):
     def __init__(self):
         # Your code here
-        self.head = []
-        self.max_value = None
+        self.stack = Stack()
+        # self.head = []
+        self.max_stack = Stack()
 
     def push(self, item):
         """Add a new item onto the top of our stack."""
         # Your code here
-        self.head.append(item)
-        self.max_value = max(max(self.head), item)
+        # self.head.append(item)
+        # self.max_value = max(max(self.head), item)
+        current_max = self.get_max()
+        if current_max is None or current_max < item:
+            self.max_stack.push(item)
+        self.stack.push(item)
 
     def pop(self):
         """Remove and return the top item from our stack."""
         # Your code here
-        if not self.head:
-            return None
-
-        self.head.pop()
-        self.max_value = max(self.head)
+        # if not self.head:
+        #     return None
+        # self.head.pop()
+        # self.max_value = max(self.head)
+        item = self.stack.pop()
+        self.max_stack.pop()
+        return item
 
     def get_max(self):
         """The last item in maxes_stack is the max item in our stack."""
         # Your code here
-        return self.max_value
+        return self.max_stack.peek()
 
 
-# max_stack = MaxStack()
-# max_stack.push(1)
-# max_stack.push(2)
-# max_stack.push(5)
-# max_stack.pop()
-# print(max_stack.get_max())
+max_stack = MaxStack()
+max_stack.push(1)
+max_stack.push(2)
+max_stack.push(5)
+max_stack.pop()
+print(max_stack.get_max())
 
 """
 Your goal is to define a `Queue` class that uses two stacks. Your `Queue` class
@@ -1068,7 +1073,4 @@ def csSearchRotatedSortedArray(nums, target):
 
     return -1
 
-
 # print(csSearchRotatedSortedArray([6, 7, 0, 1, 2, 3, 4, 5], 6))
-
-

@@ -49,3 +49,11 @@ const notDoubles = () => {
 notDoubles()
 
 console.log(notDoublesArr)
+
+
+
+
+
+
+
+
