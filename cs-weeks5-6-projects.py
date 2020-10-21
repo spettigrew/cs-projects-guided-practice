@@ -503,29 +503,29 @@ class TreeNode:
 # for recursive solution keep track of base case (when there is no root) and
 # the recursive way
 def inorder_traversal(root):
-    #     # base case
-    #     if root in None:
-    #         return []
-    #     # recursively call the function on the left child until no more left
-    #     # children then the root will be none and the values are returned up the
-    #     # chain inorder
-    #     return inorder_traversal(root.left) + [root.val] + inorder_traversal(
-    #         root.right)
+        # base case
+        if root is None:
+            return []
+        # recursively call the function on the left child until no more left
+        # children then the root will be none and the values are returned up the
+        # chain inorder
+        return inorder_traversal(root.left) + [root.val] + inorder_traversal(
+            root.right)
     # the iterative way with a stack
     # declare the stack and the result array
-    stack = []
-    result = []
-    # if a left child exists add it onto the stack when no more left children
-    # add the last root to the result
-    # then go back to the previous root on the stack and add it and check if
-    # it has right children, if so repeat steps on the right child as new root
-    while root is not None or stack != []:
-        while root is not None:
-            stack.append(root)
-            root = root.left
-        root = stack.pop()
-        result.append(root.val)
-        root = root.right
+    # stack = []
+    # result = []
+    # # if a left child exists add it onto the stack when no more left children
+    # # add the last root to the result
+    # # then go back to the previous root on the stack and add it and check if
+    # # it has right children, if so repeat steps on the right child as new root
+    # while root is not None or stack != []:
+    #     while root is not None:
+    #         stack.append(root)
+    #         root = root.left
+    #     root = stack.pop()
+    #     result.append(root.val)
+    #     root = root.right
 
 
 """
@@ -704,6 +704,7 @@ t = {
     }
 }
 
+# ********* Breadth first
 
 #
 # Binary trees are already defined with this interface:
