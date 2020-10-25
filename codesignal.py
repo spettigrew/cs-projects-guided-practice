@@ -209,6 +209,7 @@ grid = [[".", "4", ".", ".", ".", ".", ".", ".", "."],
         [".", ".", ".", ".", ".", ".", "2", ".", "."],
         [".", ".", ".", "8", ".", ".", ".", ".", "."]]
 
+
 # my solution
 # def sudoku2(grid):
 #     # check if any inner array contains duplicate numbers
@@ -356,7 +357,7 @@ isCryptSolution(crypt, solution) = false.
 Even though 054 + 091 = 145, 054 and 091 both contain leading zeroes, meaning that this is not a valid solution.
 """
 
-crypt = ["SEND", "MORE", "MONEY"] and
+crypt = ["SEND", "MORE", "MONEY"]
 
 solution = [['O', '0'],
             ['M', '1'],
@@ -367,7 +368,248 @@ solution = [['O', '0'],
             ['R', '8'],
             ['S', '9']]
 
-def isCryptSolution(crypt, solution):
-    pass
 
-print(isCryptSolution(crypt, solution))
+# my solution
+def isCryptSolution(crypt, solution):
+    # for each string get the numbers for each character
+    num_arr = []
+    nums = ''
+    for word in crypt:
+        for char in word:
+            for sect in solution:
+                if char in sect:
+                    nums += sect[1]
+        if len(nums) > 1 and nums.startswith('0'):
+            return False
+        num_arr.append(nums)
+        nums = ''
+    pointer = 0
+    total = 0
+    while pointer < len(num_arr) - 1:
+        total += int(num_arr[pointer])
+        pointer += 1
+    if total != int(num_arr[len(num_arr) - 1]):
+        return False
+    return True
+
+
+# most voted code signal solution
+# def isCryptSolution(crypt, solution):
+#     dic = {ord(c): d for c, d in solution}
+#     *v, = map(lambda x: x.translate(dic), crypt)
+#     return not any(x != "0" and x.startswith("0") for x in v) and \
+#         int(v[0]) + int(v[1]) == int(v[2])
+
+
+# print(isCryptSolution(crypt, solution))
+
+"""
+Linked lists
+"""
+
+"""
+*** Remove K from list
+----------------------
+Note: Try to solve this task in O(n) time using O(1) additional space, where n is the number of elements in the list, since this is what you'll be asked to do during an interview.
+
+Given a singly linked list of integers l and an integer k, remove all elements from list l that have a value equal to k.
+
+Example
+
+For l = [3, 1, 2, 3, 4, 5] and k = 3, the output should be
+removeKFromList(l, k) = [1, 2, 4, 5];
+For l = [1, 2, 3, 4, 5, 6, 7] and k = 10, the output should be
+removeKFromList(l, k) = [1, 2, 3, 4, 5, 6, 7].
+"""
+
+# Singly-linked lists are already defined with this interface:
+# class ListNode(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.next = None
+#
+
+l = [3, 1, 2, 3, 4, 5]
+k = 3
+
+
+# my solution
+def removeKFromList(l, k):
+    if l is None:
+        return []
+    current = l
+    prev = None
+    while current is not None:
+        if current.value == k:
+            # if the head has the current value just put the value of
+            # next into it and remove next
+            if prev is None:
+                l = current.next
+                current = l
+            else:
+                prev.next = current.next
+                current = current.next
+        else:
+            prev = current
+            current = current.next
+    return l
+
+
+# most voted on codesignal
+# def removeKFromList(l, k):
+#     c = l
+#     while c:
+#         if c.next and c.next.value == k:
+#             c.next = c.next.next
+#         else:
+#             c = c.next
+#     return l.next if l and l.value == k else l
+
+
+"""
+*** Is list palindrome ***
+--------------------------
+Note: Try to solve this task in O(n) time using O(1) additional space, where n is the number of elements in l, since this is what you'll be asked to do during an interview.
+
+Given a singly linked list of integers, determine whether or not it's a palindrome.
+
+Note: in examples below and tests preview linked lists are presented as arrays just for simplicity of visualization: in real data you will be given a head node l of the linked list
+
+Example
+
+For l = [0, 1, 0], the output should be
+isListPalindrome(l) = true;
+
+For l = [1, 2, 2, 3], the output should be
+isListPalindrome(l) = false.
+"""
+
+
+# Singly-linked lists are already defined with this interface:
+# class ListNode(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.next = None
+#
+
+# my solution (used google)
+def isListPalindrome(l):
+    if l is None:
+        return True
+    head = l
+    prev = None
+    while l.next:
+        l.prev = prev
+        prev = l
+        l = l.next
+    tail = l
+    tail.prev = prev
+    while head is not tail and head.value == tail.value:
+        head = head.next
+        tail = tail.prev
+    if head is tail:
+        return True
+    elif head.value == tail.value:
+        return True
+    else:
+        return False
+
+
+# best voted on codesignal
+# def isListPalindrome(l):
+#     if not l or not l.next:
+#         return True
+#     s = 1
+#     n = l
+#     while n.next:
+#         n = n.next
+#         s += 1
+#
+#     middle = s // 2
+#
+#     n = l
+#     for i in range(middle):
+#         n = n.next
+#
+#     if s % 2:
+#         n = n.next
+#
+#     r = n  # reverse n
+#     m = r.next
+#     for _ in range(middle - 1):  # flip n
+#         m.next, r, m = r, m, m.next
+#
+#     for _ in range(middle):
+#         if r.value != l.value:
+#             return False
+#         r = r.next
+#         l = l.next
+#
+#     return True
+
+"""
+*** Add two huge numbers
+------------------------
+You're given 2 huge integers represented by linked lists. Each linked list element is a number from 0 to 9999 that represents a number with exactly 4 digits. The represented number might have leading zeros. Your task is to add up these huge integers and return the result in the same format.
+
+Example
+
+For a = [9876, 5432, 1999] and b = [1, 8001], the output should be
+addTwoHugeNumbers(a, b) = [9876, 5434, 0].
+
+Explanation: 987654321999 + 18001 = 987654340000.
+
+For a = [123, 4, 5] and b = [100, 100, 100], the output should be
+addTwoHugeNumbers(a, b) = [223, 104, 105].
+
+Explanation: 12300040005 + 10001000100 = 22301040105.
+"""
+
+
+# Singly-linked lists are already defined with this interface:
+# class ListNode(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.next = None
+#
+
+def addTwoHugeNumbers(a, b):
+    if a is None and b is None:
+        return [0]
+    if a.value == 0:
+        return b
+
+    cur_a = a
+    cur_b = b
+    a_val = ''
+    b_val = ''
+    a_count = len(str(a.value))
+    b_count = len(str(b.value))
+    count = max(a_count, b_count)
+    print('count:', count)
+    while cur_a is not None:
+        zeros = count - len(str(cur_a.value))
+        a_val += '0'*zeros
+        a_val += str(cur_a.value)
+        cur_a = cur_a.next
+
+    while cur_b is not None:
+        b_val += str(cur_b.value)
+        cur_b = cur_b.next
+
+    result = str(int(a_val) + int(b_val))
+    print('a:', a_val)
+    print('b:', b_val)
+    print(result)
+    n = count
+
+    res_arr = [int(result[i:i+n]) for i in range(0, len(result), n)]
+
+    for num in res_arr:
+        if num > 0:
+            num = int(str(num).rstrip('0'))
+
+    return res_arr
+
+
+print(str(1000).rstrip('0'))

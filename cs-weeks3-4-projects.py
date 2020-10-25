@@ -707,7 +707,7 @@ max_stack.push(1)
 max_stack.push(2)
 max_stack.push(5)
 max_stack.pop()
-print(max_stack.get_max())
+# print(max_stack.get_max())
 
 """
 Your goal is to define a `Queue` class that uses two stacks. Your `Queue` class
@@ -1073,4 +1073,587 @@ def csSearchRotatedSortedArray(nums, target):
 
     return -1
 
+
 # print(csSearchRotatedSortedArray([6, 7, 0, 1, 2, 3, 4, 5], 6))
+
+"""
+Challenge
+Write a logarithmic expression that is identical to this exponential expression:
+
+2^n = 64
+log_2 64 = 6
+
+Write an exponential expression that is identical to this logarithmic expression:
+
+log_2 128 = n
+2^7 = 128
+
+What keywords should you look out for that might alert you that logarithms are involved?
+doubles, halves
+"""
+
+"""
+Rewrite the implementation of linear search below so that the algorithm searches from the end of the list to the beginning.
+"""
+
+
+def linear_search(arr, target):
+    # loop through each item in the input array
+    i = len(arr) - 1
+    for idx in range(len(arr)):
+        # check if the item at the current index is equal to the target
+        if arr[i] == target:
+            # return the current index as the match
+            return i
+        i -= 1
+    # if we were able to loop through the entire array, the target is not present
+    return -1
+
+
+arr = [1, 2, 3, 4, 5, 6]
+target = 3
+# print(linear_search(arr, target))
+
+
+"""
+Write a recursive search function that receives as input an array of integers and a target integer value. This function should return True if the target element exists in the array, and False otherwise.
+What would be the base case(s) we'd have to consider for implementing this function?
+How should our recursive solution converge on our base case(s)?
+
+In your own words, write out the three rules for recursion and how you can identify when a problem is amenable to using a recursive method.
+- problem has an obvious base case
+- the data changes predictably on the way to the base case 
+- the function must call itself
+"""
+
+
+def recursive_search(arr, target):
+    if arr[0] == target:
+        return True
+    elif len(arr[1:]) > 1:
+        return recursive_search(arr[1:], target)
+    return False
+
+
+# print(recursive_search(arr, target))
+
+
+"""
+Binary Search
+"""
+
+
+def binary_search(arr, target):
+    # 1. Declare min = 0 and max = length of array - 1
+    min = 0
+    max = len(arr) - 1
+    while not max < min:
+        # 2. Figure out the guess value by getting the middle integer between min and max
+        guess = (max + min) // 2
+        # 3. if array[guess] equals the target, we found the element, return the index
+        if arr[guess] == target:
+            return guess
+        # 4. if the guess was too low, reset min to be one more than the guess
+        elif arr[guess] < target:
+            min = guess + 1
+        # 5. if the guess was too high, reset max to be one less than the guess
+        else:
+            max = guess - 1
+    # no match was found
+    return -1
+
+
+# target = 5
+# print(binary_search(arr, target))
+
+"""
+What is the time complexity of our binary_search function above?
+- logN
+Can you turn the function above into a recursive function? Any variables tracked/updated in the while loop will have to become parameters for the recursive function.
+"""
+arr = [1, 2, 3, 4, 5, 6]
+target = 55
+
+
+def binary_recursive_search(arr, target, min_index, max_index):
+    if min_index >= max_index:
+        return -1
+    guess = (max_index + min_index) // 2
+    if arr[guess] == target:
+        return guess
+    elif target < arr[guess]:
+        return binary_recursive_search(arr, target, min_index, guess - 1)
+    else:
+        return binary_recursive_search(arr, target, guess + 1, max_index)
+
+
+# print(binary_recursive_search(arr, target, 0, len(arr)))
+
+"""
+Searching-recursion guided
+"""
+
+"""
+I was bored one day and decided to look at last names in the phonebook for my
+area.
+I flipped open the phonebook to a random page near the middle and started
+perusing. I wrote each last name that I was unfamiliar with down on paper in
+increasing order. When I got to the end of the phonebook, I was having so much
+fun I decided to start from the beginning and keep going until I reached the
+page where I had started.
+When I was finished, I had a list of interesting last names that were mostly
+alphabetical. The problem was that my list starts somewhere near the middle of
+the alphabet, reaches the end, and then starts from the beginning of the
+alphabet. In other words, my list of names is sorted, but it is "rotated."
+Example:
+surnames = [
+    'liu',
+    'mcdowell',
+    'nixon',
+    'sparks',
+    'zhang',
+    'ahmed',  # <-- rotates here!
+    'brandt',
+    'davenport',
+    'farley',
+    'glover',
+    'kennedy',
+]
+Write a function that finds the index of the "rotation point". The "rotation
+point" is where I started working from the beginning of the phone book. The
+list I came up was absolutely huge, so make sure your solution is efficient.
+*Note: you should be able to come up with a solution that has O(log n) time
+complexity.*
+"""
+
+surnames = [
+    'sparks',
+    'zhang',
+    'liu',
+    'ahmed',  # <-- rotates here!
+    'brandt',
+    'davenport',
+    'farley',
+    'glover',
+    'kennedy',
+    'mcdowell',
+    'nixon',
+]
+
+
+# works w numbers not names
+def find_rotation_point(surnames):
+    # Your code here
+    min = 0
+    max = len(surnames) - 1
+    while not max < min:
+        guess = (min + max) // 2
+        if surnames[guess] < surnames[guess + 1] and surnames[guess] < surnames[
+            guess - 1]:
+            return guess
+        else:
+            if surnames[guess] > surnames[0]:
+                min = guess + 1
+            elif surnames[guess] < surnames[0]:
+                max = guess - 1
+
+
+# print('rotation', find_rotation_point([6, 7, 8, 9, 10, 0, 1, 2, 3, 4, 5]))
+
+def find_rotation_point(surnames):
+    # Your code here
+    # UNDERSTAND
+    # [ 6,   7, 8, 0, 1, 2, 3, 4, 5]
+    #           min max
+    #           mid
+    # [ 7, 0, 1,  2, 3, 4, 5, 6]
+    #  min
+    # max
+    # mid
+    # Plan:
+    # we should use some kind of a binary search
+    # max and min indices
+    min = 0
+    max = len(surnames) - 1
+    # find the middle index
+    mid = (min + max) // 2
+    # if the middle surname is the rotation point:  (base case)
+    # middle surname is rotation if prev element is > than current
+    # return the index
+    # otherwise:
+    # have we rotated yet?
+    # we can tell that by comparing to the first element in the array
+    first_element = surnames[0]
+    while not max <= min:
+        current_element = surnames[mid]
+        # if current element >= first element: we haven't rotated yet, rotation point is "still ahead of us"
+        if current_element >= first_element:
+            # search right
+            # move the min index to middle + 1
+            min = mid + 1
+        # else if current element < first element: we have rotated
+        else:
+            # current_element < first_element
+            # search left:
+            # move the max index to middle index
+            max = mid
+    # keep going until max and min cross
+    return min
+
+
+"""
+You are a new author that is working on your first book. You are working on a
+series of drafts. Each draft is based on the previous draft. The latest draft
+of your book has a serious typo. Since each newer draft is based on the
+previous draft, all the drafts after the draft containing the typo also include
+the typo.
+Suppose you have `n` drafts `[1, 2, 3, ..., n]` and you need to find out the
+first one containing the typo (which causes all the following drafts to have
+the typo as well).
+You are given access to an API tool `containsTypo(draft)` that will return
+`True` if the draft contains a typo and `False` if it does not.
+You need to implement a function that will find the *first draft that contains
+a typo*. Also, you have to pay a fee for every call to `containsTypo()`, so
+make sure that your solution minimizes the number of API calls.
+Example:
+Given `n = 5`, and `draft = 4` is the first draft containing a typo.
+containsTypo(3) -> False
+containsTypo(5) -> True
+containsTypo(4) -> True
+"""
+
+n = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+def firstDraftWithTypo(n):
+    # Your code here
+    pass
+    contains_typo = 4
+    min = 0
+    max = len(n) - 1
+    while not max < min:
+        guess = (min + max) // 2
+        # if containsTypo were real this line would be:
+        # if containsTypo(n[guess]) and not containsTypo(n[guess -1]):
+        if n[guess] == contains_typo and n[guess - 1] != contains_typo:
+            # resulting in the first occurrence where the typo exists
+            return n[guess]
+        # if containsTypo were real this line would be:
+        # if not containsTypo(n[guess]):
+        elif n[guess] < contains_typo:
+            min = guess + 1
+        else:
+            max = guess - 1
+    return -1
+
+
+print(firstDraftWithTypo(n))
+
+"""
+Cookie Monster can eat either 1, 2, or 3 cookies at a time. If he were given a
+jar of cookies with `n` cookies inside of it, how many ways could he eat all
+`n` cookies in the cookie jar? Implement a function `eating_cookies` that
+counts the number of possible ways Cookie Monster can eat all of the cookies in
+the jar.
+For example, for a jar of cookies with n = 3 (the jar has 3 cookies inside it),
+there are 4 possible ways for Cookie Monster to eat all the cookies inside it:
+He can eat 1 cookie at a time 3 times
+He can eat 1 cookie, then 2 cookies
+He can eat 2 cookies, then 1 cookie
+He can eat 3 cookies all at once.
+Thus, eating_cookies(3) should return an answer of 4.
+Can you implement a solution that has a O(n) time complexity and a O(n) space
+complexity?
+*Note: Since this question is asking you to generate a bunch of possible
+permutations, you'll probably want to use recursion for this. Think about base
+cases that we would want our recursive function to stop recursing on (when do
+you know you've found a "way" to eat the cookies versus when you have not?).*
+"""
+
+"""
+1
+1 once
+= 1
+********
+2
+1 twice
+2 once
+= 2
+*********
+3
+1 1 1 
+1 and 2
+2 and 1
+3 once
+********
+"""
+
+n = 3
+
+
+def eating_cookies(n, cache=None):
+    # if n < 0:
+    #     return 0
+    # if n == 0:
+    #     return 1
+    # return eating_cookies(n-1) + eating_cookies(n - 2) + eating_cookies(n -3)
+
+    # let the cache be 2 longer than n
+    cache = [0] * (n + 2)
+    print(cache)
+    cache[0] = 1
+    cache[1] = 1
+    cache[2] = 2
+    for i in range(3, n + 1):
+        print('*******i:', i)
+        print(
+            f'cache[i]: {cache[i]} = cache[i - 1]: {cache[i - 1]} + cache[i - 2]: {cache[i - 2]} + cache[i - 3]: {cache[i - 3]}')
+        cache[i] = cache[i - 1] + cache[i - 2] + cache[i - 3]
+    return cache[n]
+
+
+"""
+when he has n cookies, he has three options: eat 1 cookie, eat 2 cookie, or eat 3 cookies. So if you go down each of those options, he then has n - x more cookies to eat, and y ways to eat that amount of cookies. So you can basically sum up the number of ways to eat (n-1) cookies + ways to eat (n-2) cookies + ways to eat (n-3) cookies
+"""
+
+# print(eating_cookies(n))
+
+"""
+Sprint 1
+"""
+
+"""
+Given a string, remove adjacent duplicate characters.
+
+Example
+
+For s = "aaaaa", the output should be
+removeAdjacent(s) = "a";
+For s = "abccaaab", the output should be
+removeAdjacent(s) = "abcab".
+"""
+
+
+# s = "aaaaa"
+# s = "abccaaab"
+
+def removeAdjacent(s):
+    # add first letter to new string
+    if s == '':
+        return s
+    new_str = s[0]
+    # iterate the string
+    for letter in s:
+        # if the next letter is the same as previous continue
+        if letter == new_str[len(new_str) - 1]:
+            continue
+        else:
+            new_str += letter
+    return new_str
+
+
+# print(removeAdjacent(s))
+
+"""
+Write a function to reverse the given string (the input string is given as an array of characters) and return the result.
+
+Note: your solution should be "in-place" with O(1) space complexity. Although many in-place functions do not return the modified input, in this case you should.
+
+Hint: you should try using a "two-pointers approach".
+
+[execution time limit] 4 seconds (py3)
+
+[input] array.char input
+
+[output] array.char
+"""
+
+str = 'reverse'
+
+
+def reverse_String(str):
+    i, j = 0, len(str) - 1
+    print(i, j)
+    while i < j:
+        str[i], str[j] = str[j], str[i]
+        i += 1
+        j -= 1
+    return str
+
+
+# print(reverse_String(str))
+
+"""
+Given the string, check if it is a palindrome.
+
+Example
+
+For inputString = "aabaa", the output should be
+checkPalindrome(inputString) = true;
+For inputString = "abac", the output should be
+checkPalindrome(inputString) = false;
+For inputString = "a", the output should be
+checkPalindrome(inputString) = true.
+"""
+
+inputString = "aabaa"
+# inputString = "abac"
+# inputString = "a"
+inputString = "hlbeeykoqqqqokyeeblh"
+
+
+def checkPalindrome(inputString):
+    return inputString == inputString[::-1]
+
+
+# print(checkPalindrome(inputString))
+
+"""
+*** Data Structures and Algorithms Sprint ***
+---------------------------------------------
+"""
+
+"""
+*** Reverse Linked List ***
+---------------------------
+
+Note: Your solution should have O(l.length) time complexity and O(1) space complexity, since this is what you will be asked to accomplish in an interview.
+
+Given a singly linked list, reverse and return it.
+
+Example
+
+For l = [1, 2, 3, 4, 5], the output should be
+reverseLinkedList(l) = [5, 4, 3, 2, 1].
+"""
+
+
+# Singly-linked lists are already defined with this interface:
+# class ListNode(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.next = None
+#
+def reverseLinkedList(l):
+    cur = l
+    prev = None
+    next = None
+
+    while cur:
+        next = cur.next
+
+        cur.next = prev
+
+        prev = cur
+        cur = next
+
+    return prev
+
+
+"""
+*** check Blanagrams ***
+------------------------
+Two words are blanagrams if they are anagrams but exactly one letter has been substituted for another.
+
+Given two words, check if they are blanagrams of each other.
+
+Example
+
+For word1 = "tangram" and word2 = "anagram", the output should be
+checkBlanagrams(word1, word2) = true;
+
+For word1 = "tangram" and word2 = "pangram", the output should be
+checkBlanagrams(word1, word2) = true.
+
+Since a word is an anagram of itself (a so-called trivial anagram), we are not obliged to rearrange letters. Only the substitution of a single letter is required for a word to be a blanagram, and here 't' is changed to 'p'.
+
+For word1 = "silent" and word2 = "listen", the output should be
+checkBlanagrams(word1, word2) = false.
+
+These two words are anagrams of each other, but no letter substitution was made (the trivial substitution of a letter with itself shouldn't be considered), so they are not blanagrams.
+"""
+
+word1 = "tangpam"
+word2 = "anagram"
+
+
+def checkBlanagrams(word1, word2):
+    if word1 == '' or word2 == '':
+        return False
+    work_string = ''
+    diff = 0
+    sort1 = sorted(word1)  # O(n) space O(nlogn) time
+    sort2 = sorted(word2)  # O(n) space O(nlogn) time
+    for i in range(len(word1)):  # O(n)
+        # check for substitutions
+        if sort1[i] != sort2[i]:
+            diff += 1
+        work_string += word1[i] # O(n) space
+    print(work_string)
+    print(word1)
+    count = 0
+    # check if there was more than 1 substitution made
+    for i in range(len(work_string)):  # O(n)
+        if work_string[i] not in word2:
+            count += 1
+    print('count:', count)
+    # if more than 1 substitution return False
+    if count > 1:
+        return False
+    # if no substitutions return false
+    if diff == 0:
+        return False
+    if sorted(work_string) == sorted(word1):
+        return True
+    return False
+
+
+print(checkBlanagrams(word1, word2))
+
+"""
+*** Find value sorted shifted array ***
+---------------------------------------
+You are given a sorted array in ascending order that is rotated at some unknown pivot (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]) and a target value.
+
+Write a function that returns the target value's index. If the target value is not present in the array, return -1.
+
+You may assume no duplicate exists in the array.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+Example 1:
+
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+
+Example 2:
+
+Input: nums = [4,5,6,7,0,1,2], target = 3
+Output: -1
+"""
+
+nums = [4, 5, 6, 7, 0, 1, 2]
+target = 0
+
+
+def findValueSortedShiftedArray(nums, target):
+    min = 0
+    max = len(nums) - 1
+
+    while not max < min:
+        guess = (max + min) // 2
+
+        if nums[guess] == target:
+            return guess
+        elif nums[min] <= nums[guess]:
+            if nums[min] <= target < nums[guess]:
+                max = guess
+            else:
+                min = guess + 1
+        else:
+            if nums[max - 1] >= target > nums[guess]:
+                min = guess + 1
+            else:
+                max = guess
+
+    return -1
