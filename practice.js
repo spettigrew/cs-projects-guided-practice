@@ -235,4 +235,137 @@ const assertArraysEqual = (actual, expected, testName) => {
   }
 }
 
-console.log(assertArraysEqual([1, 2, 3, 4, 5], [1, 2, 3, 4, 6], 'arr test'))
+// console.log(assertArraysEqual([1, 2, 3, 4, 5], [1, 2, 3, 4, 6], 'arr test'))
+
+
+function average(numbers) {
+  // uses sum function
+  const sumOfNums = sum(numbers)
+  // returns the average of an array of numbers
+  return sumOfNums / numbers.length
+}
+
+function sum(numbers) {
+  // returns the sum of an array of numbers
+  let sumOfNums = 0
+  numbers.map(num => {
+    sumOfNums += num
+  })
+  return sumOfNums
+}
+
+// console.log(sum([1,2,3,4,5]))
+// console.log(average([1,2,3,4,5]))
+
+
+var classList = ["Joe", "Jack", "John", "Fred", "Frank", "Barry", "Larry", "Mary",
+  "Harry", "Farrell", "Susan", "Monica", "Keira", "Caroline", "Harriet", "Erica",
+  "Luann", "Cheryl", "Beth", "Rupa", "Linda", "Allison", "Nancy", "Dora"];
+
+// FUNCTION DEFINITION(S)
+
+// USE THIS FUNCTION TO GENERATE A RANDOM NUMBER
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function decorateClassListWithAges(classList) {
+  let result = []
+  // creates an object for each string in the input array, with an age of 10 or 11
+  // returns an array of these objects
+  classList.map(item => {
+    result.push({
+      name: item,
+      age: getRandomIntInclusive(10, 11)
+    })
+  })
+  return result
+}
+
+// console.log(decorateClassListWithAges(classList))
+// ASSERTION FUNCTION(S) TO BE USED
+
+// TESTS CASES
+
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function isIsogram(text) {
+  // add each char to a set
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+  // note: a set drops dup values
+  // thus, to see if all the chars were unique,
+  // check length of text and the size of the set
+  let singles = new Set(text.toLowerCase())
+  console.log(singles)
+  console.log(singles.size)
+  console.log(text.length)
+  if (singles.size === text.length || text === '') {
+    return true
+  } else {
+    return false
+  }
+}
+
+// console.log(isIsogram('cat'))
+
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function findMaxRepeatCountInWord(word) {
+  // Break up individual word into individual letters.
+  // Count the instances of each letter
+  // Iterate all the counts and find the highest
+  // Return this word's max repeat count
+  const repeats = {}
+  for (const char in word) {
+    if (!repeats[word[char]]) {
+      repeats[word[char]] = 1
+    } else {
+      repeats[word[char]] += 1
+    }
+  }
+  let letter = ''
+  let highest = 0
+  for (let repeat in repeats) {
+    if (repeats[repeat] > highest) {
+      highest = repeats[repeat]
+      letter = repeat
+    }
+  }
+  const result = {}
+  result[letter] = highest
+  return highest
+}
+
+console.log(findMaxRepeatCountInWord('hellooo'))
+
+function findFirstWordWithMostRepeatedChars(text) {
+  var maxRepeatCountOverall = 0;
+  var wordWithMaxRepeatCount = '';
+
+  // Break up input text into words (space-delimited).
+  const wordsList = text.split(' ')
+  // For each word...
+  for (word in wordsList) {
+    // If that max repeat count is higher than the overall max repeat count, then
+    // update maxRepeatCountOverall
+    // update wordWithMaxRepeatCount
+    var repeatCountForWord = findMaxRepeatCountInWord(wordsList[word])
+    if (maxRepeatCountOverall < repeatCountForWord) {
+      maxRepeatCountOverall = repeatCountForWord
+      wordWithMaxRepeatCount = wordsList[word]
+    }
+  }
+
+  return wordWithMaxRepeatCount;
+}
+
+// console.log(findFirstWordWithMostRepeatedChars('this sentence is a tester' +
+//   ' for repeated characters'))
+

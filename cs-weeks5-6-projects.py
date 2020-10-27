@@ -503,29 +503,31 @@ class TreeNode:
 # for recursive solution keep track of base case (when there is no root) and
 # the recursive way
 def inorder_traversal(root):
-        # base case
-        if root is None:
-            return []
-        # recursively call the function on the left child until no more left
-        # children then the root will be none and the values are returned up the
-        # chain inorder
-        return inorder_traversal(root.left) + [root.val] + inorder_traversal(
-            root.right)
-    # the iterative way with a stack
-    # declare the stack and the result array
-    # stack = []
-    # result = []
-    # # if a left child exists add it onto the stack when no more left children
-    # # add the last root to the result
-    # # then go back to the previous root on the stack and add it and check if
-    # # it has right children, if so repeat steps on the right child as new root
-    # while root is not None or stack != []:
-    #     while root is not None:
-    #         stack.append(root)
-    #         root = root.left
-    #     root = stack.pop()
-    #     result.append(root.val)
-    #     root = root.right
+    # base case
+    if root is None:
+        return []
+    # recursively call the function on the left child until no more left
+    # children then the root will be none and the values are returned up the
+    # chain inorder
+    return inorder_traversal(root.left) + [root.val] + inorder_traversal(
+        root.right)
+
+
+# the iterative way with a stack
+# declare the stack and the result array
+# stack = []
+# result = []
+# # if a left child exists add it onto the stack when no more left children
+# # add the last root to the result
+# # then go back to the previous root on the stack and add it and check if
+# # it has right children, if so repeat steps on the right child as new root
+# while root is not None or stack != []:
+#     while root is not None:
+#         stack.append(root)
+#         root = root.left
+#     root = stack.pop()
+#     result.append(root.val)
+#     root = root.right
 
 
 """
@@ -704,6 +706,7 @@ t = {
     }
 }
 
+
 # ********* Breadth first
 
 #
@@ -790,11 +793,184 @@ def treePaths(t):
     while stack:
         root, el = stack.pop()
         if root.left is None and root.right is None:
-            result.append(el+str(root.value))
+            result.append(el + str(root.value))
         if root.right:
-            stack.append((root.right, el+str(root.value) + '->'))
+            stack.append((root.right, el + str(root.value) + '->'))
         if root.left:
-            stack.append((root.left, el+str(root.value) + '->'))
+            stack.append((root.left, el + str(root.value) + '->'))
     return result
 
+
+"""
+Warm up
+"""
+
+"""
+Challenge
+Objective 2
+* Represent a graph as an adjacency list and an adjacency matrix and compare 
+    and contrast the respective  representations
+- Using the graph shown in the picture above, write python code to represent 
+  the graph in an adjacency list.
+- Using the same graph you used for the first exercise, write python code to 
+  represent the graph in an adjacency matrix.
+Objective 3
+*  Implement user-defined Vertex and Graph classes that allow basic operations
+- Load the Vertex class and Graph class into an interactive Python environment and use the classes to create an instance of the graph shown below.
+"""
+
+
+# 1
+class Graph:
+    def __init__(self):
+        self.vertices = {
+            'A': {'B': 1},
+            'B': {'C': 3, 'D': 2, 'E': 1},
+            'C': {'E': 4},
+            'D': {'E': 2},
+            'E': {'F': 3},
+            'F': {},
+            'G': {'D': 1},
+        }
+
+
+# 2
+class Graph:
+    def __init__(self):
+        self.edges = [
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 3, 3, 1, 0, 0],
+            [0, 0, 0, 0, 4, 0, 0],
+            [0, 0, 0, 0, 2, 0, 0],
+            [0, 0, 0, 0, 0, 3, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0],
+        ]
+
+
+# 3
+
+class Vertex:
+    def __init__(self, value):
+        self.value = value
+        self.connections = {}
+
+    def __str__(self):
+        return str(self.value) + ' connections: ' + str(
+            [x.value for x in self.connections])
+
+    def add_connection(self, vert, weight=0):
+        self.connections[vert] = weight
+
+    def get_connections(self):
+        return self.connections.keys()
+
+    def get_value(self):
+        return self.value
+
+    def get_weight(self, vert):
+        return self.connections[vert]
+
+
+class Graph:
+    def __init__(self):
+        self.vertices = {}
+        self.count = 0
+
+    def __contains__(self, vert):
+        return vert in self.vertices
+
+    def __iter__(self):
+        return iter(self.vertices.values())
+
+    def add_vertex(self, value):
+        self.count += 1
+        new_vert = Vertex(value)
+        self.vertices[value] = new_vert
+        return new_vert
+
+    def add_edge(self, v1, v2, weight=0):
+        if v1 not in self.vertices:
+            self.add_vertex(v1)
+        if v2 not in self.vertices:
+            self.add_vertex(v2)
+        self.vertices[v1].add_connection(self.vertices[v2], weight)
+
+    def get_vertices(self):
+        return self.vertices.keys()
+
+
+g_verts = ['A', 'B', 'C', 'D', 'E']
+
+g = Graph()
+for v in g_verts:
+    g.add_vertex(g)
+
+g.add_edge('A', 'B', 1)
+g.add_edge('B', 'C', 3)
+g.add_edge('B', 'D', 2)
+g.add_edge('E', 'D', 1)
+
+# for v in g:
+#     for w in v.get_connections():
+#         print("( %s, %s )" % (v.get_value(), w.get_value()))
+
+
+"""
+Guided Project for Graphs I
+"""
+
+"""
+*** Demo 1 ***
+--------------
+You are given an undirected graph with its maximum degree (the degree of a node
+is the number of edges connected to the node).
+You need to write a function that can take an undirected graph as its argument
+and color the graph legally (a legal graph coloring is when no adjacent nodes
+have the same color).
+The number of colors necessary to complete a legal coloring is always one more
+than the graph's maximum degree.
+*Note: We can color a graph in linear time and space. Also, make sure that your
+solution can handle a loop in a reasonable way.*
+"""
+# Definition for a graph node.
+class GraphNode:
+    def __init__(self, label):
+        self.label = label
+        self.neighbors = set()
+        self.color = None
+
+def color_graph(graph, colors):
+    pass
+
+"""
+*** Demo 2 ***
+--------------
+You are given a 2d grid of `"1"`s and `"0"`s that represents a "map". The
+`"1"`s represent land and the `"0"s` represent water.
+You need to write a function that, given a "map" as an argument, counts the
+number of islands. Islands are defined as adjacent pieces of land that are
+connected horizontally or vertically. You can also assume that the edges of the
+map are surrounded by water.
+Example 1:
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+Example 2:
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+"""
+from collections import deque
+
+def numIslands(grid):
+    pass
 
