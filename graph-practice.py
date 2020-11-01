@@ -309,7 +309,7 @@ true if the road system is efficient, false otherwise.
 
 n = 6
 roads = [[3, 0], [0, 4], [5, 0], [2, 1],
-          [1, 4], [2, 3], [5, 2]]
+         [1, 4], [2, 3], [5, 2]]
 
 tester = [
     [0, 0, 0, 1, 1, 1],
@@ -321,38 +321,204 @@ tester = [
 ]
 
 
+# roads = [[0, 4], [5, 0], [2, 1],
+#          [1, 4], [2, 3], [5, 2]]
+#
+# roads = [[0, 1],
+#          [0, 2],
+#          [3, 4]]
+
+# my first passing solution with help but still not passing 100% of tests
+# def efficientRoadNetwork(n, roads):
+#     if not roads:
+#         return True
+#     if n == 0:
+#         return True
+#     graph = {}
+#     for i in range(n):
+#         graph[str(i)] = set()
+#     for road in roads:
+#         graph[str(road[0])].add(str(road[1]))
+#         graph[str(road[1])].add(str(road[0]))
+#
+#
+#     def bfs(graph, S, D):
+#         queue = [(S, [S])]
+#         while queue:
+#             (vertex, path) = queue.pop(0)
+#             for next in graph[vertex] - set(path):
+#                 if next == D:
+#                     yield path + [next]
+#                 else:
+#                     queue.append((next, path + [next]))
+#
+#     def shortest(graph, S, D):
+#         try:
+#             return next(bfs(graph, S, D))
+#         except StopIteration:
+#             return None
+#
+#     for i in range(len(graph)):
+#         for j in range(1, len(graph)):
+#             if i != j:
+#                 result = (shortest(graph, str(i), str(j)))
+#                 if result is None:
+#                     return False
+#                 if len(result) > n + 1:
+#                     return False
+#     return True
+
+
+# solution from google
+# def efficientRoadNetwork(n, roads):
+#     graph = [[1] * n for x in range(n)]
+#     print(graph)
+#     for i in range(n):
+#         graph[i][i] = 0
+#     for i, j in roads:
+#         graph[i][j] = 1
+#         graph[j][i] = 1
+#     for k in range(n):
+#         for i in range(n):
+#             for j in range(n):
+#                 if graph[i][j] > graph[i][k] + graph[k][j]:
+#                     graph[i][j] = graphy[i][k] + graph[k][j]
+#     for i in range(n):
+#         for j in range(n):
+#             if graph[i][j] >= 3:
+#                 return False
+#     return True
+
+# solution with most votes
 def efficientRoadNetwork(n, roads):
-    graph = {}
-    for i in range(n):
-        graph[i] = []
-    for road in roads:
-        graph[road[0]].append(road[1])
-        graph[road[1]].append(road[0])
-
-    print(graph)
-
-    def bfs(node):
-        queue = [node[0]]
-        visited = [node[0]]
-
-        count = 0
-        while queue:
-            actual_node = queue.pop(0)
-            count += 1
-            print('count:', count)
-            print('node:', actual_node)
-            for n in actual_node:
-                print(n)
-                if n not in visited:
-                    visited.append(n)
-                    queue.append(graph[n])
-                    print('queue:', queue)
-
-    bfs(graph)
+    adj = [[] for i in range(n)]
+    for rd in roads:
+        adj[rd[0]].append(rd[1])
+        adj[rd[1]].append(rd[0])
+    print(adj)
+    for city in range(n - 1):
+        oneHop = {c for c in adj[city]}
+        print(oneHop)
+        twoHops = {c for c1 in oneHop for c in adj[c1]}
+        print(twoHops)
+        if len({city} | oneHop | twoHops) < n:
+            return False
+    return True
 
 
+# print(efficientRoadNetwork(n, roads))
 
 
+"""
+Given two words ( start_word and end_word), and a dictionary's word list, 
+return the shortest transformation sequence from begin_word to end_word, 
+such that:
+
+only one letter can be changed at a time.
+
+each transformed word must exist in the word list.  Note that start_word is 
+not a transformed word.
+
+Note:
+
+Return None if there is no such transformation sequence.
+All words contain only lowercase alphabetic chars.
+You may assume no duplicates in the word list.
+You may assume start-word and end_word are non-empty and are not the same.
+
+Sample:
+start_word = 'hit'
+end_word = 'cog'
+return: ['hit', 'hot', 'cot', 'cog'] 
+"""
+words = set()
+with open('words.txt') as f:
+    for w in f:
+        w = w.strip().lower()
+        words.add(w)
 
 
-print(efficientRoadNetwork(n, roads))
+# create function to get all the neighbors of a word ( only 1 letter diff)
+def get_neighbors(word):
+    neighbors = []
+    for w in words:
+        if len(w) == len(word):
+            diff = 0
+            for i in range(len(w)):
+                if w[i] != word[i]:
+                    diff += 1
+                if diff > 1:
+                    break
+            if diff == 1:
+                neighbors.append(w)
+    return neighbors
+
+
+print(get_neighbors('hit'))
+
+
+# BFS to solve this (not sure why takes much longer than guided)
+def bfs(start_word, end_word):
+    print('s, e', start_word, end_word)
+    visited = set()
+    q = [[start_word]]
+
+    while q:
+        path = q.pop(0)
+
+        v = path[-1]
+        if v not in visited:
+            visited.add(v)
+            if v == end_word:
+                return path
+            # only need get_neighbors and not the entire graph
+            for neighbor in get_neighbors(v):
+                path_copy = path + [neighbor]
+                q.append(path_copy)
+
+
+print(bfs('hit', 'cog'))
+
+"""
+Codesignal Project
+"""
+
+"""
+*** csFriendCircles ***
+-----------------------
+There are N students in a baking class together. Some of them are friends, while some are not friends. The students' friendship can be considered transitive. This means that if Ami is a direct friend of Bill, and Bill is a direct friend of Casey, Ami is an indirect friend of Casey. A friend circle is a group of students who are either direct or indirect friends.
+
+Given a N*N matrix M representing the friend relationships between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not.
+
+You need to write a function that can output the total number of friend circles among all the students.
+
+Example 1:
+
+Input: 
+[[1,1,0],
+ [1,1,0],
+ [0,0,1]]
+Output: 2
+Explanation: The 0th and 1st students are direct friends, so they are in a friend circle. 
+The 2nd student himself is in a friend circle. So return 2.
+Example 2:
+
+Input: 
+[[1,1,0],
+ [1,1,1],
+ [0,1,1]]
+Output: 1
+Explanation: The 0th and 1st students are direct friends, the 1st and 2nd students are direct friends, 
+so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
+"""
+
+friendships = [[1, 1, 0],
+               [1, 1, 0],
+               [0, 0, 1]]
+
+
+def csFriendCircles(friendships):
+    pass
+
+
+print(csFriendCircles(friendships))

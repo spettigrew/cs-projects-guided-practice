@@ -81,16 +81,66 @@ class BSTNode:
             else:
                 return self.right.search(target)
 
+    def delete(self, target):
+        current = self
+        parent = None
+
+        while True:
+            if target < current.value:
+                parent = current
+                current = current.left
+            elif target > current.value:
+                parent = current
+                current = current.right
+            else:
+                target_node = current
+                break
+
+        if target is False:
+            return False
+
+        replacement = None
+        replacement_parent = None
+        current = target_node.right
+
+        while True:
+            if current.left is None:
+                replacement = current
+                break
+            else:
+                replacement_parent = current
+                current = current.left
+
+        replacement_parent.left = None
+        if target_node.value < parent.value:
+            parent.left = replacement
+        elif target_node.value > parent.value:
+            parent.right = replacement
+        replacement.left = target_node.left
+        replacement.right = target_node.right
+
+    def find_minimum_value(self):
+        if self.left is None:
+            return self
+        else:
+            return self.left.find_minimum_value()
+
 
 class BST:
     def __init__(self, value):
         self.root = BSTNode(value)
 
     def insert(self, value):
-        self.root.insert(value)
+        return self.root.insert(value)
 
     def search(self, target):
-        self.root.search(target)
+        return self.root.search(target)
+
+    def find_minimum_value(self):
+        return self.root.find_minimum_value().value
+
+    def delete(self, value):
+        return self.root.delete(value)
 
 
 """
@@ -475,6 +525,7 @@ Input:
     /
    5
 Output: [3,5,1]
+DFS types of traversals
 - Preorder Traversal
 --- Visit the root node first
 --- Traverse the left subtree in preorder
@@ -597,7 +648,8 @@ def build_tree(preorder, inorder):
         return root
 
 
-# print(build_tree(preorder, inorder))
+tree = build_tree(preorder, inorder)
+# print('tree:', inorder_traversal(tree))
 
 """
 *** CodeSignal ***
@@ -933,6 +985,8 @@ than the graph's maximum degree.
 *Note: We can color a graph in linear time and space. Also, make sure that your
 solution can handle a loop in a reasonable way.*
 """
+
+
 # Definition for a graph node.
 class GraphNode:
     def __init__(self, label):
@@ -940,8 +994,15 @@ class GraphNode:
         self.neighbors = set()
         self.color = None
 
+
 def color_graph(graph, colors):
+    # make a graph to pass in
+    # try to get edges count
+
+    # edges plus 1 is colors
+
     pass
+
 
 """
 *** Demo 2 ***
@@ -969,8 +1030,196 @@ Input: grid = [
 ]
 Output: 3
 """
-from collections import deque
+
+grid = [
+    ["1", "1", "1", "1", "0"],
+    ["1", "1", "0", "1", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "0", "0", "0"]
+]
+
 
 def numIslands(grid):
     pass
 
+
+# print(numIslands(grid))
+
+"""
+*** Code signal ***
+-------------------
+You are given a directed acyclic graph (DAG) that contains N nodes.
+
+Write a function that can find all the possible paths from node 0 to node N - 1. You can return the path in any order.
+
+graph[a] is a list of all nodes b for which the edge a -> b exists.
+
+Example:
+Graph illustration
+
+Input: graph = [[1, 2],[3],[3],[4],[]]
+Output: [[0,1,3,4], [0,2,3,4]]
+Note: although you can print the different paths in any order, you should keep the order of nodes within one path in order.
+"""
+
+# graph = [[1, 2],
+#          [3],
+#          [3],
+#          []]
+
+
+graph = [[1, 2], [3], [3], [4], []]
+
+
+def csFindAllPathsFromAToB(graph):
+
+
+    class Graph:
+        def __init__(self):
+            self.verts = {}
+
+        def add_vertex(self, vert):
+            self.verts[vert] = []
+
+        def add_edge(self, v_from, v_to):
+            self.verts[v_from].append(v_to)
+
+        def is_connected(self, v_from, v_to):
+            if v_from in self.verts and v_to in self.verts:
+                return v_to in self.verts[v_from]
+
+        # close but not fully working
+        def findPathsHelper(self, s, t, visited, path):
+            # print('res', results)
+            # print('s', s, 't', t)
+            # mark the current node visited
+            visited[s] = True
+            # add the current node to the path
+            path.append(s)
+            # print('append path', path)
+            # if current is the target then add the path to the results array
+            if s == t:
+                # append a new copy of the path to the result so changing the
+                # path does not change the copy in the reuslts
+                # print('if check', 's', s, 't', t)
+                results.append(list(path))
+                # print('append res', results)
+            else:
+                # if current is not the target recur for all neighbors
+                for i in self.verts[s]:
+                    if not visited[i]:
+                        self.findPathsHelper(i, t, visited, path)
+
+            # pop current node from path and mark it as unvisited
+            path.pop()
+            # print('path after pop', path)
+            visited[s] = False
+
+        def findAllPaths(self, s, t):
+
+            # mark all the nodes as not visited
+            visited = [False] * (len(self.verts))
+
+            # create an array to hold the paths
+            path = []
+
+            # call the helper function to find all the paths
+            self.findPathsHelper(s, t, visited, path)
+
+    # create the graph from the matrices
+    g = Graph()
+    for i in range(len(graph)):
+        g.add_vertex(i)
+        for v in graph[i]:
+            g.add_edge(i, v)
+    # printing graph to make sure it is working properly
+    # print(g.verts)
+
+    # set the start node to the first node
+    # set the target node to the last node
+    start = list(g.verts.keys())[0]
+    target = list(g.verts.keys())[len(list(g.verts.keys())) - 1]
+    # create an array to hold the found paths
+    results = []
+    g.findAllPaths(start, target)
+
+    return results
+
+
+# print(csFindAllPathsFromAToB(graph))
+
+
+"""
+Graphs II warmup
+"""
+
+"""
+Objective 1
+On your own, complete the following tasks:
+
+Please spend a few minutes researching to find a unique use-case of a breadth-first-search that we did not mention in the list above.
+
+Using the graph represented below, draw a picture of the graph and label each of the verts to show the correct vertex visitation order for a breadth-first-search starting with vertex "I".
+
+class Graph:
+    def __init__(self):
+        self.vertices = {
+                            "A": {"B", "C", "D"},
+                            "B": {},
+                            "C": {"E", "F"},
+                            "D": {"G"},
+                            "E": {"G"},
+                            "F": {"J"},
+                            "G": {},
+                            "H": {"C", "J", "K"},
+                            "I": {"D", "E", "H"},
+                            "J": {"L"},
+                            "K": {"C"},
+                            "L": {"M"},
+                            "M": {},
+                            "N": {"H", "K", "M"}
+                        }
+Besides marking verts with colors as in the pseudo-code example above, how else could you track the verts we have already visited?
+"""
+
+"""
+Objective 2
+On your own, complete the following tasks:
+
+Please spend a few minutes researching to find a unique use-case of a depth-first search that we did not mention in the list above.
+
+Using the graph represented below, draw a picture of the graph and label each of the verts to show the correct vertex visitation order for a depth-first-search starting with vertex "I".
+
+class Graph:
+    def __init__(self):
+        self.vertices = {
+                            "A": {"B", "C", "D"},
+                            "B": {},
+                            "C": {"E", "F"},
+                            "D": {"G"},
+                            "E": {"G"},
+                            "F": {"J"},
+                            "G": {},
+                            "H": {"C", "J", "K"},
+                            "I": {"D", "E", "H"},
+                            "J": {"L"},
+                            "K": {"C"},
+                            "L": {"M"},
+                            "M": {},
+                            "N": {"H", "K", "M"}
+                        }
+"""
+
+
+"""
+Objective 3
+What is time complexity in Big O notation of a breadth-first search on a graph with V vertices and E edges?
+Which method will find the shortest path between a starting point and any other reachable node? A breadth-first search or a depth-first search?
+"""
+
+
+"""
+Objective 4
+Does a depth-first search reliably find the shortest path?
+If you didn't want to use recursion, what data structure could you use to write an iterative depth-first search?
+"""

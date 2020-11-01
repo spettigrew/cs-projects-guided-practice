@@ -343,7 +343,7 @@ function findMaxRepeatCountInWord(word) {
   return highest
 }
 
-console.log(findMaxRepeatCountInWord('hellooo'))
+// console.log(findMaxRepeatCountInWord('hellooo'))
 
 function findFirstWordWithMostRepeatedChars(text) {
   var maxRepeatCountOverall = 0;
@@ -368,4 +368,102 @@ function findFirstWordWithMostRepeatedChars(text) {
 
 // console.log(findFirstWordWithMostRepeatedChars('this sentence is a tester' +
 //   ' for repeated characters'))
+
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function PhoneNumberFormatter(numbers) {
+  this.numbers = numbers;
+}
+
+PhoneNumberFormatter.prototype.render = function () {
+  console.log('test')
+  var string = '';
+  // your code here
+  string = `${this.parenthesize(this.getAreaCode())} ${this.getExchangeCode()}-${this.getLineNumber()}`
+  return string;
+};
+
+PhoneNumberFormatter.prototype.getAreaCode = function () {
+  // your code here
+  return this.numbers.slice(0, 3).join('')
+
+};
+
+PhoneNumberFormatter.prototype.getExchangeCode = function () {
+  // your code here
+  return this.slice(3, 6)
+};
+
+PhoneNumberFormatter.prototype.getLineNumber = function () {
+  // your code here
+  return this.slice(6, this.numbers.length)
+};
+
+PhoneNumberFormatter.prototype.parenthesize = function (string) {
+  return '(' + string + ')';
+};
+
+PhoneNumberFormatter.prototype.slice = function (start, end) {
+  return this.numbers.slice(start, end).join('');
+};
+
+// ASSERTION FUNCTION(S) TO BE USED
+
+// TESTS CASES
+
+// let numbers = [6, 5, 0, 8, 3, 5, 9, 1, 7, 2]
+//
+// let myNumber = new PhoneNumberFormatter(numbers)
+// console.log(myNumber.render())
+
+
+// Skeleton
+
+// FUNCTION DEFINITION(S)
+function findLongestPalindrome(sentence) {
+  // split sentence into words
+  const words = sentence.split(' ')
+  // iterate words and collect the palindromes
+  const palendromes = words.filter(word => {
+    if (isPalindrome(word)) {
+      return word
+    }
+  })
+  // sort the list of palindromes by word length
+  let sortedPalindromes = palendromes.sort()
+  console.log({sortedPalindromes})
+  // return the largest item in the sorted list
+}
+
+
+function reverseString(string) {
+  return string.split('').reverse().join('').toLowerCase()
+}
+
+function isPalindrome(word) {
+  // hint: you can detect palindromes by comparing a string to its reverse
+  if (word.toLowerCase() === reverseString(word)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function sortAscendingByLength(a, b) {
+  console.log(a, b)
+  if (a.length > b.length) {
+    return 1;
+  } else if (a.length < b.length) {
+    return -1;
+  }
+  return 0;
+}
+
+
+const sentence = 'Mom makes lunch at noon on racecar plates wow'
+// ASSERTION FUNCTION(S) TO BE USED
+console.log(findLongestPalindrome(sentence))
+// TESTS CASES
 
