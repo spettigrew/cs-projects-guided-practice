@@ -426,15 +426,15 @@ function findLongestPalindrome(sentence) {
   // split sentence into words
   const words = sentence.split(' ')
   // iterate words and collect the palindromes
-  const palendromes = words.filter(word => {
-    if (isPalindrome(word)) {
+  const pal = words.filter(word => {
+    if (isPalindrome(word.toLowerCase())) {
       return word
     }
   })
   // sort the list of palindromes by word length
-  let sortedPalindromes = palendromes.sort()
-  console.log({sortedPalindromes})
+  pal.sort(sortAscendingByLength)
   // return the largest item in the sorted list
+  return pal[pal.length - 1]
 }
 
 
@@ -452,7 +452,6 @@ function isPalindrome(word) {
 }
 
 function sortAscendingByLength(a, b) {
-  console.log(a, b)
   if (a.length > b.length) {
     return 1;
   } else if (a.length < b.length) {
@@ -464,6 +463,96 @@ function sortAscendingByLength(a, b) {
 
 const sentence = 'Mom makes lunch at noon on racecar plates wow'
 // ASSERTION FUNCTION(S) TO BE USED
-console.log(findLongestPalindrome(sentence))
+// console.log(findLongestPalindrome(sentence))
 // TESTS CASES
 
+
+/*
+* Fashion Inventory Part-A
+Write a function that will take in this currentInventory array as its argument. Your function should access all the shoes across each designer and return them out in a flat list: {designer name} - {shoe name} - {price}{designer name} - {shoe name} - {price}
+
+//...console output:
+Brunello Cucinelli, tasselled black low-top lace-up, 1000
+Brunello Cucinelli, tasselled green low-top lace-up, 1100
+// and so on...
+Here is an example of a flat list in code:
+
+var flatList = "First line\nSecond Line\nThird Line\n";
+console.log(flatList);
+Observe that a "flat list" refers to a string where each new line is separated by the newline symbol. Also note that the "flat list" ends with a newline symbol. There are, like all of the challenges in this course, tests attached to these exercises. However, in order to get the most effective practice, please continue to write your own unit tests.
+
+Hint: the return value is a string. */
+
+var currentInventory = [
+  {
+    name: 'Brunello Cucinelli',
+    shoes: [
+      {name: 'tasselled black low-top lace-up', price: 1000},
+      {name: 'tasselled green low-top lace-up', price: 1100},
+      {name: 'plain beige suede moccasin', price: 950},
+      {name: 'plain olive suede moccasin', price: 1050}
+    ]
+  },
+  {
+    name: 'Gucci',
+    shoes: [
+      {name: 'red leather laced sneakers', price: 800},
+      {name: 'black leather laced sneakers', price: 900}
+    ]
+  }
+];
+
+function renderInventory(inventory) {
+  let flatList = ''
+  inventory.map(designer => {
+    designer.shoes.map(shoe => {
+      flatList += `${designer.name}, ${shoe.name}, ${shoe.price}\n`
+    })
+  })
+  return flatList
+}
+
+//Create helper functions if needed
+// console.log(renderInventory(currentInventory))
+
+
+/*
+* Fashion Inventory Part-B
+Your function should return the average cost of all shoes per designer in this format:
+
+var expected = {
+  'designers': [
+    {
+      'name': 'Brunello Cucinelli',
+      'averagePrice': 1025
+    },
+    {
+      'name': 'Gucci',
+      'averagePrice': 850
+    }
+  ]
+};
+There are, like all of the challenges in this course, tests attached to these exercises. However, in order to get the most effective practice, please continue to write your own unit tests. */
+
+
+function calculateAveragePricePerDesigner(inventory) {
+  let averagePrices = {
+    'designers': []
+  }
+  inventory.map(designer => {
+    let priceTotals = 0
+    designer.shoes.map(shoe => {
+      priceTotals += shoe.price
+    })
+    averagePrices.designers.push({
+      'name': designer.name,
+      'averagePrice': priceTotals / designer.shoes.length
+    })
+  })
+  return averagePrices
+}
+
+// Create helper functions if needed
+
+
+console.log(calculateAveragePricePerDesigner(currentInventory))
