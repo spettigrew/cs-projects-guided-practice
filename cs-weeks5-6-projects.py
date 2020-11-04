@@ -1072,8 +1072,6 @@ graph = [[1, 2], [3], [3], [4], []]
 
 
 def csFindAllPathsFromAToB(graph):
-
-
     class Graph:
         def __init__(self):
             self.verts = {}
@@ -1088,7 +1086,6 @@ def csFindAllPathsFromAToB(graph):
             if v_from in self.verts and v_to in self.verts:
                 return v_to in self.verts[v_from]
 
-        # close but not fully working
         def findPathsHelper(self, s, t, visited, path):
             # print('res', results)
             # print('s', s, 't', t)
@@ -1210,16 +1207,221 @@ class Graph:
                         }
 """
 
-
 """
 Objective 3
 What is time complexity in Big O notation of a breadth-first search on a graph with V vertices and E edges?
 Which method will find the shortest path between a starting point and any other reachable node? A breadth-first search or a depth-first search?
 """
 
-
 """
 Objective 4
 Does a depth-first search reliably find the shortest path?
 If you didn't want to use recursion, what data structure could you use to write an iterative depth-first search?
 """
+
+"""
+Guided
+"""
+
+"""
+Demo 1
+------
+An `image` is represented by a 2-D array of integers, each integer representing
+the pixel value of the image (from 0 to 65535).
+Given a coordinate `(sr, sc)` representing the starting pixel (row and column)
+of the flood fill, and a pixel value `newColor`, "flood fill" the image.
+To perform a "flood fill", consider the starting pixel, plus any pixels
+connected 4-directionally to the starting pixel of the same color as the
+starting pixel, plus any pixels connected 4-directionally to those pixels (also
+with the same color as the starting pixel), and so on. Replace the color of all
+of the aforementioned pixels with the newColor.
+At the end, return the modified image.
+Example 1:
+```plaintext
+Input:
+image = [[1,1,1],[1,1,0],[1,0,1]]
+sr = 1, sc = 1, newColor = 2
+Output: [[2,2,2],[2,2,0],[2,0,1]]
+Explanation:
+From the center of the image (with position (sr, sc) = (1, 1)), all pixels
+connected by a path of the same color as the starting pixel are colored with
+the new color.
+Note the bottom corner is not colored 2, because it is not 4-directionally
+connected to the starting pixel.
+```
+Notes:
+- The length of `image` and `image[0]` will be in the range `[1, 50]`.
+- The given starting pixel will satisfy `0 <= sr < image.length` and
+`0 <= sc < image[0].length`.
+- The value of each color in `image[i][j]` and `newColor` will be an integer in
+`[0, 65535]`.
+"""
+
+
+def flood_fill(image, sr, sc, new_color):
+    """
+    Inputs:
+    image -> List[List[int]]
+    sr -> int
+    sc -> int
+    new_color -> int
+    Output:
+    List[List[int]]
+    """
+    # Your code here
+
+
+"""
+Demo 2
+------
+In a town, there are `N` people labelled from `1` to `N`.  There is a rumor
+that one of these people is secretly the town judge.
+If the town judge exists, then:
+1. The town judge trusts nobody.
+2. Everybody (except for the town judge) trusts the town judge.
+3. There is exactly one person that satisfies properties 1 and 2.
+You are given `trust`, an array of pairs `trust[i] = [a, b]` representing that
+the person labelled a trusts the person labelled `b`.
+If the town judge exists and can be identified, return the label of the town
+judge.  Otherwise, return `-1`.
+Example 1:
+```plaintext
+Input: N = 2, trust = [[1,2]]
+Output: 2
+```
+Example 2:
+```plaintext
+Input: N = 3, trust = [[1,3],[2,3]]
+Output: 3
+```
+Example 3:
+```plaintext
+Input: N = 3, trust = [[1,3],[2,3],[3,1]]
+Output: -1
+```
+Example 4:
+```plaintext
+Input: N = 3, trust = [[1,2],[2,3]]
+Output: -1
+```
+Example 5:
+```plaintext
+Input: N = 4, trust = [[1,3],[1,4],[2,3],[2,4],[4,3]]
+Output: 3
+```
+Constraints:
+- `1 <= N <= 1000`
+- `0 <= trust.length <= 10^4`
+- `trust[i].length == 2`
+- `trust[i]` are all different
+- `trust[i][0] != trust[i][1]`
+- `1 <= trust[i][0], trust[i][1] <= N`
+"""
+
+
+def find_judge(N, trust):
+    """
+    Inputs:
+    N -> int
+    trust -> List[List[int]]
+    Output:
+    int
+    """
+    # Your code here
+
+
+"""
+Codesignal
+"""
+
+"""
+*** csFriendCircles ***
+-----------------------
+There are N students in a baking class together. Some of them are friends, while some are not friends. The students' friendship can be considered transitive. This means that if Ami is a direct friend of Bill, and Bill is a direct friend of Casey, Ami is an indirect friend of Casey. A friend circle is a group of students who are either direct or indirect friends.
+
+Given a N*N matrix M representing the friend relationships between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not.
+
+You need to write a function that can output the total number of friend circles among all the students.
+
+Example 1:
+
+Input: 
+[[1,1,0],
+ [1,1,0],
+ [0,0,1]]
+Output: 2
+Explanation: The 0th and 1st students are direct friends, so they are in a friend circle. 
+The 2nd student himself is in a friend circle. So return 2.
+Example 2:
+
+Input: 
+[[1,1,0],
+ [1,1,1],
+ [0,1,1]]
+Output: 1
+Explanation: The 0th and 1st students are direct friends, the 1st and 2nd students are direct friends, 
+so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
+"""
+
+friendships = [[1, 1, 0],
+               [1, 1, 0],
+               [0, 0, 1]]
+
+
+
+friendships = [[1, 1, 0],
+               [1, 1, 1],
+               [0, 1, 1]]
+
+def csFriendCircles(friendships):
+    # use dfs to ensure visiting every node
+    class Graph:
+        def __init__(self):
+            self.verts = {}
+
+        def add_vertex(self, vert):
+            self.verts[vert] = []
+
+        def add_edge(self, v_from, v_to):
+            self.verts[v_from].append(v_to)
+
+        def is_connected(self, v_from, v_to):
+            if v_from in self.verts and v_to in self.verts:
+                return v_to in self.verts[v_from]
+
+    # create the graph from the matrices
+    g = Graph()
+    for i in range(len(friendships)):
+        g.add_vertex(i)
+        for v in range(len(friendships[i])):
+            if friendships[i][v] != 0 and i != v:
+                print(i, v)
+                g.add_edge(i, v)
+    # printing graph to make sure it is working properly
+    print('g', g.verts)
+
+    def findConnectedFriends(graph):
+        visited = []
+        connected = []
+        for node in graph.verts:
+            if node not in visited:
+                path = []
+                visited, path = dfs(graph, node, visited, path)
+                connected.append(path)
+        return connected
+
+    def dfs(graph, start, visited, path):
+        if start in visited:
+            return visited, path
+        visited.append(start)
+        path.append(start)
+        print('group', graph.verts[start])
+        for node in graph.verts[start]:
+            print(node)
+            visited, path = dfs(graph, node, visited, path)
+
+        return visited, path
+
+    return len(findConnectedFriends(g))
+
+# print(csFriendCircles(friendships))

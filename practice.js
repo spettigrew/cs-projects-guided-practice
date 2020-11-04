@@ -680,4 +680,356 @@ function listLacedShoes(inventory) {
   return lacedShoes
 }
 
-console.log(listLacedShoes(currentInventory))
+// console.log(listLacedShoes(currentInventory))
+
+/*
+* Flipper
+* // Submit de-obfuscated code
+Flip every pair of characters in a string.
+
+
+Example:
+var input = 'check out how interesting this problem is, it\'s insanely interesting!';
+var output = flipPairs(input);
+console.log(output); // --> hcce kuo toh wnietertsni ghtsip orlbmei ,si 't sniasenyli tnreseitgn!*/
+
+
+const flipPairs = (string) => {
+  // declare helper string to hold the swapped pair
+  let helperString = ''
+  //  iterate entire string swapping current char with next char
+  for (let i = 0; i < string.length; i += 2) {
+    if (i == string.length - 1) {
+      helperString += string[i]
+    } else {
+      helperString += string[i + 1]
+      helperString += string[i]
+    }
+  }
+  return helperString
+}
+
+// // assertion test
+// const assertEqual = (actual, expected, testName) => {
+//   if (actual === expected) {
+//     console.log('passed')
+//   } else {
+//     console.log(`Failed [${testName}] Expected "${expected}", but got "${actual}"`)
+//   }
+// }
+
+// Submit de-obfuscated code
+// Flip every pair of characters in a string.
+
+
+// Example:
+// const input = 'check out how interesting this problem is, it\'s insanely' +
+//   ' interesting!';
+// const output = flipPairs(input);
+// console.log(output); // --> hcce kuo toh wnietertsni ghtsip orlbmei ,si 't sniasenyli tnreseitgn!
+
+// test
+// assertEqual(output, 'hcce kuo toh wnietertsni ghtsip orlbmei ,si \'t' +
+//   ' sniasenyli tnreseitgn!', 'flipPairs')
+
+
+/*
+* Flip every chunk of n characters in a string, where n is any positive integer greater than 1.
+
+Note that this is intentionally very similar to the previous problem.
+
+Please focus on getting a working solution with the tools you know well.
+
+Practice the interactive/collaborative interview style that's described in the documentation.
+
+Example:
+var input = 'a short example';
+var output = flipEveryNChars(input, 5);
+console.log(output); // --> ohs axe trelpma
+
+Breaking this example down piece by piece:
+'a sho' -> 'ohs a'
+'rt ex' -> 'xe tr'
+'ample' -> 'elpma'
+
+-> 'ohs axe trelpma'*/
+
+const flipEveryNLetters = (string, n) => {
+  // declare helper string to hold the swapped characters
+  let helperString = ''
+  //  iterate entire string swapping the nth chuncks
+  for (let i = 0; i < string.length; i += n) {
+    let count = n - 1
+    while (count >= 0) {
+      helperString += string[i + count]
+      count -= 1
+    }
+
+  }
+  return helperString
+}
+
+// console.log(flipEveryNLetters('a short example', 5))
+
+// assertion test
+// const assertEqual = (actual, expected, testName) => {
+//   if (actual === expected) {
+//     console.log('passed')
+//   } else {
+//     console.log(`Failed [${testName}] Expected "${expected}", but got "${actual}"`)
+//   }
+// }
+//
+// const input = 'a short example'
+// const output = flipEveryNLetters(input, 5)
+// const target = 'ohs axe trelpma'
+//
+// assertEqual(output, target, 'flipEveryNLetters')
+
+
+/*
+* Given a string of even and odd numbers, find which is the sole even number or the sole odd number.
+
+The return value should be 1-indexed, not 0-indexed.
+
+Examples :
+detectOutlierValue("2 4 7 8 10"); // => 3 - Third number is odd, while the rest of the numbers are even
+detectOutlierValue("1 10 1 1");  //=> 2 - Second number is even, while the rest of the numbers are odd*/
+
+
+const findSoleEvenOrOdd = (numberString) => {
+  // convert the string to an array to better handle numbers larger than 1 digit
+  const numArr = numberString.split(' ')
+  // declare arrays to hold evens and odds for comparison later
+  const evens = []
+  const odds = []
+  // iterate the array
+  numArr.map(num => {
+    // put current number in correct array
+    if (num % 2 === 0) {
+      evens.push(num)
+    } else {
+      odds.push(num)
+    }
+  })
+  // find the array that is shorter
+  let shorterArr
+  if (evens.length < odds.length) {
+    shorterArr = evens
+  } else {
+    shorterArr = odds
+  }
+  // return the index (1 based) of the item in the shorter array
+  return numArr.indexOf(shorterArr[0]) + 1
+}
+
+// // assertion test
+// const assertEqual = (actual, expected, testName) => {
+//   if (actual === expected) {
+//     console.log('passed')
+//   } else {
+//     console.log(`Failed [${testName}] Expected "${expected}", but got "${actual}"`)
+//   }
+// }
+//
+// const input = '2 4 7 8 10'
+// const output = findSoleEvenOrOdd(input)
+// const target = 3
+//
+// assertEqual(output, target, 'findSoleEvenOrOdd')
+
+
+/*
+* You will be given an array that contains two strings. Your job is to create a function that will take those two strings and transpose them, so that the strings go from top to bottom instead of left to right.
+
+e.g. transposeTwoStrings(['Hello','World']);
+
+should return:
+H W
+e o
+l r
+l l
+o d*/
+
+const stringsArr = ['Hello', 'World']
+const transposeTwoStrings = (arr) => {
+  //  create helper string to store result
+  let helperString = ''
+  // get the length of the longer string
+  let longestLength = 0
+  if (arr[0].length > arr[1]) {
+    longestLength = arr[0].length
+  } else {
+    longestLength = arr[1].length
+  }
+  // iterate both strings at once using a counter
+  let counter = 0
+  while (counter < longestLength) {
+    //  check if there is a character at the word index of the counter
+    if (arr[0][counter]) {
+      // if so add it to the working string in place 1 with a trailing space
+      helperString += `${arr[0][counter]} `
+    } else {
+      // if it does not exist add a space with a trailing space
+      helperString += '  '
+    }
+    // repeat steps above for word 2 but add newline instead of trailing space
+    if (arr[1][counter]) {
+      // if so add it to the working string in place 1 with a trailing space
+      helperString += `${arr[1][counter]}`
+    } else {
+      // if it does not exist add a space with a trailing space
+      helperString += ' '
+    }
+    if (counter != longestLength - 1) {
+      helperString += '\n'
+    }
+    counter += 1
+  }
+  return helperString
+}
+
+
+// // assertion test
+// const assertEqual = (actual, expected, testName) => {
+//   if (actual === expected) {
+//     console.log('passed')
+//   } else {
+//     console.log(`Failed [${testName}] Expected "${expected}", but got "${actual}"`)
+//   }
+// }
+//
+// const input = ['Hello', 'World']
+// const output = transposeTwoStrings(input)
+// const target = 'H W\ne o\nl r\nl l\no d'
+//
+//
+// assertEqual(output, target, 'findSoleEvenOrOdd')
+
+
+/*
+* Given a list of non-negative integers and a target sum, find a pair of numbers that sums to the target sum.
+
+Example:
+
+var pair = findPairForSum([3, 34, 4, 12, 5, 2], 9);
+console.log(pair); // --> [4, 5]*/
+
+const findPairForSum = (arr, target) => {
+  //  create result array
+  let sumPair = []
+  //  iterate the input array and check for sums between all the numbers
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 1; j < arr.length; j++) {
+      if ((arr[i] + arr[j]) === target) {
+        sumPair.push(arr[i])
+        sumPair.push(arr[j])
+        return sumPair
+      }
+    }
+  }
+  return sumPair
+}
+
+//
+// // assertion test
+// const assertEqual = (actual, expected, testName) => {
+//   let isSameLength = false
+//   let hasSameValues = false
+//   if (actual.length === expected.length) {
+//     isSameLength = true
+//   }
+//   if (isSameLength) {
+//     for (let i = 0; i < actual.length; i++) {
+//       if (actual[i] != expected[i]) {
+//         hasSameValues = false
+//         return
+//       } else {
+//         hasSameValues = true
+//       }
+//     }
+//   }
+//   if (hasSameValues && isSameLength) {
+//     console.log('passed')
+//   } else {
+//     console.log(`Failed [${testName}] Expected "${expected}", but got "${actual}"`)
+//   }
+// }
+//
+// const input = [3, 34, 4, 12, 5, 2]
+// const output = findPairForSum(input, 9)
+// const target = [4, 5]
+//
+//
+// assertEqual(output, target, 'findPairForSum')
+
+
+/*
+* Is one string a rotated version of another?
+
+For example:
+String 1: 'hello world'
+String 2: 'orldhello w'
+
+Extra hint: (click the drop down to ROT7 to see hint)
+If you double the string, you'll be able to find another string inside the doubled string using familiar String methods.
+
+Doubled string: 'hello worldhello world'
+Search w/in it: '       orldhello w    '
+
+ */
+
+const checkRotatedString = (str1, str2) => {
+  const doubledString = str1 += str1
+  if (doubledString.includes(str2)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+
+// console.log(checkRotatedString('hello world', 'orldhello w'))
+
+
+/*
+* Binary search is a technique for very rapidly searching a sorted collection by cutting the search space in half at every pass.
+
+Given a sorted array, such as this:
+[1, 3, 16, 22, 31, 33, 34]
+
+You can search for the value 31, as follows:
+
+1) Pick the midpoint: 22.
+2) The value is higher than 22, so now consider only the right half of the previous array:
+[...31, 33, 34]
+3) Pick the midpoint: 33
+4) The value is lower than 33, so now consider only the left half of the previous array:
+[...31...]
+5) Pick the midpoint: 31
+6) You've hit the value.
+7) Return the index of the value.
+
+Notes:
+* If you don't find the value, you can return null.
+* If at any point you calculate the index of the midpoint and get a fractional number, just round it down ("floor" it).*/
+
+const binarySearch = (arr, target) => {
+//   1) Pick the midpoint:
+  let min = 0
+  let max = arr.length - 1
+  let midpoint
+  while (min <= max) {
+    midpoint = Math.floor((max + min) / 2)
+    if (arr[midpoint] === target) {
+      return midpoint
+    } else if (arr[midpoint] > target) {
+      max = midpoint - 1
+    } else if (arr[midpoint] < target) {
+      min = midpoint + 1
+    }
+  }
+  return null
+}
+
+console.log(binarySearch([1, 3, 16, 22, 31, 33, 34], 35))
