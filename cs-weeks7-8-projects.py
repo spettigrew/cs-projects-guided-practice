@@ -25,11 +25,14 @@ hash_table.remove("b");         // remove the mapping for 2
 hash_table.get("b");            // returns -1 (not found)
 ```
 """
+
+
 class ListNode:
     def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
+
 
 class MyHashTable:
     def __init__(self):
@@ -39,13 +42,18 @@ class MyHashTable:
         self.values = [None] * self.size
         self.item_count = 0
 
+    def djb2(self, key):
+        str_key = str(key).encode()
+        hash_value = 5381
+
+        for b in str_key:
+            hash_value = ((hash_value << 5) + hash_value) + b
+            hash_value &= 0xffffffff
+
+        return hash_value
+
     def hash_function(self, key):
-        sum = 0
-        for pos in range(len(key)):
-            sum = sum + ord(key[pos])
-
-        return sum % self.size
-
+        return self.djb2(key) % self.size
 
     def put(self, key, value):
         # Your code here
@@ -61,7 +69,6 @@ class MyHashTable:
         self.keys[index] = key
         self.values[index] = value
 
-
     def get(self, key):
         # Your code here
         index = self.hash_function(key)
@@ -74,7 +81,6 @@ class MyHashTable:
 
         return None
 
-
     def remove(self, key: int) -> None:
         # Your code here
         index = self.hash_function(key)
@@ -83,20 +89,21 @@ class MyHashTable:
             self.values[index] = None
 
 
-hash_table = MyHashTable();
-hash_table.put("a", 1);
-hash_table.put("b", 2);
-hash_table.get("a");
-hash_table.get("c");
-hash_table.put("b", 1);
-hash_table.get("b");
-hash_table.remove("b");
-hash_table.get("b");
+hash_table = MyHashTable()
+print(hash_table.put("a", 1))
+print(hash_table.put("b", 2))
+print(hash_table.get('b'))
+print(hash_table.get("a"))
+print(hash_table.get("c"))
+print(hash_table.put("b", 1))
+print(hash_table.get("b"))
+print(hash_table.remove("b"))
+print(hash_table.get("b"))
 
 """
 *** Demo 2 *** 
 --------------
-You've uncovered a secret alien language. To your surpise, the language is made
+You've uncovered a secret alien language. To your surprise, the language is made
 up of all English lowercase letters. However, the alphabet is possibly in a
 different order (but is some permutation of English lowercase letters).
 You need to write a function that, given a sequence of words written in this
@@ -132,6 +139,8 @@ Notes:
 - order.length == 26
 - All characters in words[i] and order are English lowercase letters.
 """
+
+
 def are_words_sorted(words, alpha_order):
     """
     Inputs:
@@ -141,4 +150,3 @@ def are_words_sorted(words, alpha_order):
     bool
     """
     # Your code here
-
