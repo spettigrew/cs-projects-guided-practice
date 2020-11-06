@@ -88,17 +88,17 @@ class MyHashTable:
             self.keys[index] = None
             self.values[index] = None
 
-
-hash_table = MyHashTable()
-print(hash_table.put("a", 1))
-print(hash_table.put("b", 2))
-print(hash_table.get('b'))
-print(hash_table.get("a"))
-print(hash_table.get("c"))
-print(hash_table.put("b", 1))
-print(hash_table.get("b"))
-print(hash_table.remove("b"))
-print(hash_table.get("b"))
+#
+# hash_table = MyHashTable()
+# print(hash_table.put("a", 1))
+# print(hash_table.put("b", 2))
+# print(hash_table.get('b'))
+# print(hash_table.get("a"))
+# print(hash_table.get("c"))
+# print(hash_table.put("b", 1))
+# print(hash_table.get("b"))
+# print(hash_table.remove("b"))
+# print(hash_table.get("b"))
 
 """
 *** Demo 2 *** 
@@ -150,3 +150,30 @@ def are_words_sorted(words, alpha_order):
     bool
     """
     # Your code here
+    # map the letters of the string to a dictionary
+    hashed_letters = {}
+    count = 0
+    for letter in alpha_order:
+        hashed_letters[letter] = count
+        count += 1
+    # iterate the array
+    for word in range(len(words) - 1):
+
+        # check if the first word is longer than the 2nd word if so return False
+        if len(words[word]) > len(words[word + 1]):
+            return False
+        # iterate the first word
+        for letter in range(len(words[word])):
+            # create variables for the letters to check
+            first_letter = words[word][letter]
+            second_letter = words[word + 1][letter]
+            print('first', first_letter, 'second', second_letter)
+            if hashed_letters[first_letter] < hashed_letters[second_letter]:
+                return True
+            # if first word1[i] comes after 2nd word2[i] return False
+            if hashed_letters[first_letter] > hashed_letters[second_letter]:
+                return False
+
+    return True
+
+# print(are_words_sorted(["were","where","yellow"], "habcdefgijklmnopqrstuvwxyz"))
