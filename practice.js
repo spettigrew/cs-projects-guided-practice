@@ -1013,23 +1013,32 @@ You can search for the value 31, as follows:
 Notes:
 * If you don't find the value, you can return null.
 * If at any point you calculate the index of the midpoint and get a fractional number, just round it down ("floor" it).*/
+//
+// const binarySearch = (arr, target) => {
+// //   1) Pick the midpoint:
+//   let min = 0
+//   let max = arr.length - 1
+//   let midpoint
+//   while (min <= max) {
+//     midpoint = Math.floor((max + min) / 2)
+//     if (arr[midpoint] === target) {
+//       return midpoint
+//     } else if (arr[midpoint] > target) {
+//       max = midpoint - 1
+//     } else if (arr[midpoint] < target) {
+//       min = midpoint + 1
+//     }
+//   }
+//   return null
+// }
+//
+// console.log(binarySearch([1, 3, 16, 22, 31, 33, 34], 35)l
+let url ="http://www.zombie-bites.com"
 
-const binarySearch = (arr, target) => {
-//   1) Pick the midpoint:
-  let min = 0
-  let max = arr.length - 1
-  let midpoint
-  while (min <= max) {
-    midpoint = Math.floor((max + min) / 2)
-    if (arr[midpoint] === target) {
-      return midpoint
-    } else if (arr[midpoint] > target) {
-      max = midpoint - 1
-    } else if (arr[midpoint] < target) {
-      min = midpoint + 1
-    }
-  }
-  return null
+function getDomain(url) {
+  // your code here
+
+  return url.substring(url.indexOf('.') + 1).substring(0, url.indexOf('.'))
 }
 
-console.log(binarySearch([1, 3, 16, 22, 31, 33, 34], 35))
+console.log(getDomain(url))

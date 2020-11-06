@@ -1258,17 +1258,16 @@ Notes:
 """
 
 
-def flood_fill(image, sr, sc, new_color):
-    """
-    Inputs:
-    image -> List[List[int]]
-    sr -> int
-    sc -> int
-    new_color -> int
-    Output:
-    List[List[int]]
-    """
-    # Your code here
+def floodfill(image, row, col, color):
+    if image[row][col] != ' ':
+        return
+
+    image[row][col] = color
+
+    floodfill(row, col + 1, color)
+    floodfill(row, col - 1, color)
+    floodfill(row + 1, col, color)
+    floodfill(row - 1, col, color)
 
 
 """
@@ -1367,11 +1366,10 @@ friendships = [[1, 1, 0],
                [1, 1, 0],
                [0, 0, 1]]
 
-
-
 friendships = [[1, 1, 0],
                [1, 1, 1],
                [0, 1, 1]]
+
 
 def csFriendCircles(friendships):
     # use dfs to ensure visiting every node
